@@ -54,17 +54,41 @@ const Profile = ({ user }: { user: User }) => {
     };
 
     // Image Change
-    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = e.target.files;
-        if (files && files[0]) {
+        if (!files || !files[0]) return;
+    
         const file = files[0];
+        if (file.size > 5 * 1024 * 1024) {
+            toast.error("File size exceeds 5MB");
+            return;
+        }
+    
+        // Update preview instantly
         const reader = new FileReader();
         reader.onloadend = () => {
             setImagePreview(reader.result as string);
         };
         reader.readAsDataURL(file);
-        }
+    
+        // Upload to Cloudinary via API
+        const formDataImage = new FormData();
+        formDataImage.append("file", file);
+    
+        const uploadPromise = axios.post("/api/helper/upload-img", formDataImage);
+    
+        toast.promise(uploadPromise, {
+            loading: "Uploading Image...",
+            success: (res) => {
+                const uploadedUrl = res.data.data.url;
+                setFormData(prev => ({ ...prev, profileImage: uploadedUrl }));
+                setprofileImage(uploadedUrl); // Store it to submit later
+                return "Image Uploaded Successfully!";
+            },
+            error: "Failed to upload image.",
+        });
     };
+    
 
     // Submit Profile Update
     const handleSubmit = async () => {

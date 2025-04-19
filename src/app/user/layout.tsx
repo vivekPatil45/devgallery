@@ -1,4 +1,5 @@
 "use client";
+
 import "../globals.css";
 import { Toaster } from "react-hot-toast";
 import { UserProvider, useUser } from "@/context/UserContext";

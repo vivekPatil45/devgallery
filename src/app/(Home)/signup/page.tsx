@@ -93,12 +93,23 @@ const Signup = () => {
 
     const handleProfileImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files?.[0]) {
-        const file = e.target.files[0];
-        if (file.size > 5 * 1024 * 1024) {
-            toast.error("File size exceeds 5MB");
-            return;
-        }
-        setFormData({ ...formData, profileImage: file.name });
+            const file = e.target.files[0];
+            if (file.size > 5 * 1024 * 1024) {
+                toast.error("File size exceeds 5MB");
+                return;
+            }
+            const imageResponse = axios.postForm("/api/helper/upload-img", { file });
+            toast.promise(imageResponse, {
+                loading: "Uploading Image...",
+                success: (data: AxiosResponse) => {
+                    setFormData({
+                        ...formData,
+                        profileImage: data.data.data.url,
+                    });
+                    return "Image Uploaded Successfully";
+                },
+                error: (err: unknown) => `This just happened: ${err}`,
+            });
         }
     };
 
