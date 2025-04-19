@@ -2,6 +2,7 @@
 import Navbar from "@/components/Navbar";
 import "../globals.css";
 import { Toaster } from "react-hot-toast";
+import { UserProvider } from "@/context/UserContext";
 
 const Component = ({
   children,
@@ -33,8 +34,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    
-      <Component>{children}</Component>
+      <UserProvider>
+        <Component>{children}</Component>
+      </UserProvider>
   
   );
 }

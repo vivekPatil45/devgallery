@@ -1,4 +1,5 @@
 "use client";
+import axios, { AxiosResponse } from "axios";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
@@ -12,13 +13,21 @@ const Login = () => {
 
     const handleSubmit = async () => {
         if (!formData.email || !formData.password) {
-        toast.error("Please fill all the fields");
-        return;
+            toast.error("Please fill all the fields");
+            return;
         }
-
-        // Simulate login logic
-        toast.success("Login successful!");
-        router.push("/dashboard"); // Redirect on login success
+        const response = axios.post("/api/auth/login", { formData });
+        toast.promise(response, {
+            loading: "Signing in...",
+            success: (data: AxiosResponse) => {
+                router.push(data.data.route);
+                return data.data.message;
+            },
+            error: (err: any) => {
+                console.log(err);
+                return err.response.data.message;
+            },
+        });
     };
 
     return (

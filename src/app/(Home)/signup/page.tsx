@@ -25,6 +25,7 @@ const Signup = () => {
             toast.error("Please fill all the fields");
             return;
         }
+        formData.profileImage = "https://res.cloudinary.com/demo/image/upload/d_avatar.png/non_existing_id.png";
         try {
             const response = axios.post("/api/auth/signup", { formData });
             toast.promise(response, {
@@ -33,7 +34,7 @@ const Signup = () => {
                     router.push("/login");
                     return "Account Created Successfully";
                 },
-                error: (err: unknown) => err.response?.data?.message || "Error creating account",
+                error: (err: any) => err.response?.data?.message || "Error creating account",
             });
         } catch (error) {
             console.error("Signup error:", error);
