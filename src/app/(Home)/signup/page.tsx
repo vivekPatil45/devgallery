@@ -1,4 +1,5 @@
 "use client";
+import axios, { AxiosResponse } from "axios";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
@@ -21,21 +22,63 @@ const Signup = () => {
         const { name, email, password, profileImage } = formData;
 
         if (!name || !email || !password || !profileImage) {
-        toast.error("Please fill all the fields");
-        return;
+            toast.error("Please fill all the fields");
+            return;
+        }
+        try {
+            const response = axios.post("/api/auth/signup", { formData });
+            toast.promise(response, {
+                loading: "Creating Account...",
+                success: () => {
+                    router.push("/login");
+                    return "Account Created Successfully";
+                },
+                error: (err: unknown) => err.response?.data?.message || "Error creating account",
+            });
+        } catch (error) {
+            console.error("Signup error:", error);
+            toast.error("Failed to create account")
         }
 
-        toast.success("Successfully Signed Up!");
-        // Add actual logic here
+        
     };
 
     const verifyEmail = async () => {
-        const { name, email } = formData;
-
-        if (!name) return toast.error("Please enter your name first");
-        if (!email || !email.includes("@") || !email.includes(".")) {
-        return toast.error("Please enter a valid email");
+        if (
+            !formData.email ||
+            !formData.email.includes("@") ||
+            !formData.email.includes(".")
+        ) {
+            toast.error("Please enter a valid email address");
+            return;
         }
+        if (!formData.name) {
+            toast.error("Please enter your name first");
+            return;
+        }
+        try {
+            const response = axios.post("/api/helper/verify-email", {
+                name: formData.name,
+                email: formData.email,
+            });
+            toast.promise(response, {
+                loading: "Sending Email...",
+                success: (data: AxiosResponse) => {
+                    (
+                        document.getElementById("otpContainer") as HTMLDialogElement
+                    ).showModal();
+                    setOtp(data.data.token);
+                    return "Email Sent!!";
+                },
+                error: (err) => err.data?.response.message || "Something went wrong",
+            });
+        } catch (error) {
+            console.log(error);
+            toast.error("Something went wrong!!!");
+        }
+
+
+
 
         // Simulating OTP send
         const generatedOtp = "123456";
