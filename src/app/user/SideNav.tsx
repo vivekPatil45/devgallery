@@ -58,15 +58,15 @@ const SideNav = ({ children }: { children: React.ReactNode }) => {
                 </label>
                 </div>
 
-                <div className="flex-1 justify-between lg:hidden px-2">
-                <h1 className="text-xl font-bold flex items-center">
-                    <span className="h-7 w-7 ">
-                    <IconCamper size={28} className="text-base-content" />
-                    </span>
-                    <span className="text-primary">Travel</span>
-                    <span className="text-secondary">Finder</span>
-                </h1>
-                <ThemeToggler />
+                <div className="flex justify-between space-x-2  lg:hidden px-2">
+                    <h1 className="text-xl font-bold flex items-center">
+                        <span className="h-7 w-7 ">
+                        <IconCode size={28} className="text-base-content" />
+                        </span>
+                        <span className="text-primary">Dev</span>
+                        <span className="text-accent">Gallery</span>
+                    </h1>
+                    <ThemeToggler />
                 </div>
 
                 <div className="hidden lg:block">
@@ -147,7 +147,7 @@ const SideNav = ({ children }: { children: React.ReactNode }) => {
                         <span className="text-primary font-extrabold text-xl">
                             Dev
                         </span>
-                        <span className="text-accent font-semibold text-xl">Gallary</span>
+                        <span className="text-accent font-semibold text-xl">Gallery</span>
                     </h1>
                 </span>
                 </Link>

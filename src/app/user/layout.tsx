@@ -1,5 +1,4 @@
 "use client";
-import Navbar from "@/components/Navbar";
 import "../globals.css";
 import { Toaster } from "react-hot-toast";
 import { UserProvider, useUser } from "@/context/UserContext";
@@ -37,7 +36,7 @@ const Component = ({
         <body className={`antialiased`}>
             <Toaster />
             <SideNav>{children}</SideNav>
-            {children}
+           
         </body>
         </html>
     );
