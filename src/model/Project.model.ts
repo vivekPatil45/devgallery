@@ -2,7 +2,7 @@ import mongoose, { Schema, model, Document } from 'mongoose';
 
 export interface IProject extends Document {
   title: string;
-  description: object;
+  description: string;
   githubUrl?: string;
   liveUrl?: string;
   techStack: string[];
@@ -17,7 +17,7 @@ export interface IProject extends Document {
 const ProjectSchema = new Schema<IProject>(
   {
     title: { type: String, required: true, trim: true },
-    description: { type: Object, required: true }, // JSON format
+    description: { type: String, required: true }, // JSON format
     githubUrl: { type: String, default: '' },
     liveUrl: { type: String, default: '' },
     techStack: { type: [String], default: [] },

@@ -1,34 +1,116 @@
 "use client";
-import React, { useState } from "react";
-import { Editor, EditorState, RichUtils, convertToRaw } from "draft-js";
-import { useUser } from "@/context/UserContext";
-import "draft-js/dist/Draft.css";
+import { Editor, EditorState, RichUtils, convertFromRaw, convertToRaw } from "draft-js";
+import { useUser } from '@/context/UserContext';
+import { useRouter, useSearchParams } from 'next/navigation';
+import React, { useEffect, useState } from 'react'
+import toast from 'react-hot-toast';
+import axios,{AxiosResponse} from "axios";
 import { techStackList } from "@/utils/constants";
-import toast from "react-hot-toast";
-import axios from "axios";
-import { useRouter } from "next/navigation";
 import DraftEditor from "@/components/Editor";
-import draftToHtml from "draftjs-to-html";
 
-const defaultImage = "/bg.png"; // Replace with your default image
-
-
-
-const CreateProject = () => {
+const EditProject = () => {
     const { user } = useUser();
-    // console.log(user);
-    
     const router = useRouter();
+    const searchParams = useSearchParams();
     const [title, setTitle] = useState<string>("");
     const [description, setDescription] = useState<EditorState>(EditorState.createEmpty());
     const [githubUrl, setGithubUrl] = useState<string>("");
     const [liveUrl, setLiveUrl] = useState<string>("");
     const [techStack, setTechStack] = useState<string[]>([]);
     const [newTechInput, setNewTechInput] = useState<string>("");
-    const [image, setImage] = useState<string>(defaultImage);
+    const [image, setImage] = useState<string>("");
 
-    // Predefined tech stack list
-    console.log(description.getCurrentContent());
+    const projectId = searchParams?.get("id");
+    // console.log(projectId);
+    
+    // useEffect(() => {
+    //     if (!projectId) {
+    //         toast.error("No project ID found.");
+    //         return;
+    //     }
+
+    //     // Fetch project data when the component is mounted
+    //     const fetchProjectData = async () => {
+    //         try {
+    //             const response:AxiosResponse = await axios.get(`/api/projects/${projectId}`);
+        
+    //             const project = response.data.project;
+    //             console.log("Description - ",project.description);
+                
+
+    //             // Ensure description is in the expected format before setting it
+    //                 setTitle(project.title);
+    //                 setGithubUrl(project.githubUrl || "");
+    //                 setLiveUrl(project.liveUrl || "");
+    //                 setTechStack(project.techStack || []);
+    //                 setImage(project.image || "");
+    //                 // Ensure description exists before converting
+    //                 if (project.description) {
+    //                     if (typeof project.description === 'string') {
+    //                         const descriptionState = convertFromRaw(JSON.parse(project.description)); // Parse if it's a string
+    //                         setDescription(EditorState.createWithContent(descriptionState));
+    //                     } else {
+    //                         const descriptionState = convertFromRaw(project.description); // Directly use if it's already an object
+    //                         setDescription(EditorState.createWithContent(descriptionState));
+    //                     }
+    //                 } else {
+    //                     setDescription(EditorState.createEmpty()); // Set an empty editor state if description is not available
+    //                 }
+
+                   
+    //         } catch (error) {
+    //             console.error("Error fetching project data:", error);
+    //             toast.error("Failed to load project data.");
+    //         }
+    //     };
+
+    //     fetchProjectData();
+    // }, []);
+   
+    useEffect(() => {
+        if (!projectId) {
+            toast.error("No project ID found.");
+            return;
+        }
+    
+        // Fetch project data when the component is mounted
+        const fetchProjectData = async () => {
+            try {
+                const response: AxiosResponse = await axios.get(`/api/projects/${projectId}`);
+    
+                const project = response.data.project;
+                console.log("Project description:", project.description);
+    
+                setTitle(project.title);
+                setGithubUrl(project.githubUrl || "");
+                setLiveUrl(project.liveUrl || "");
+                setTechStack(project.techStack || []);
+                setImage(project.image || "");
+            
+    
+                // Check if description exists and is valid
+                if (project.description) {
+                    try {
+                        // Parse the stringified JSON from MongoDB and convert to EditorState
+                        const descriptionRaw = JSON.parse(project.description);
+                        const descriptionState = convertFromRaw(descriptionRaw);
+                        setDescription(EditorState.createWithContent(descriptionState));
+                    } catch (error) {
+                        console.error("Error parsing project description:", error);
+                        setDescription(EditorState.createEmpty()); // Fallback for JSON parsing errors
+                    }
+                } else {
+                    setDescription(EditorState.createEmpty()); // Fallback if no description
+                }
+    
+            } catch (error) {
+                console.error("Error fetching project data:", error);
+                toast.error("Failed to load project data.");
+            }
+        };
+    
+        fetchProjectData();
+    }, []);
     
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,12 +120,11 @@ const CreateProject = () => {
         reader.onloadend = () => setImage(reader.result as string);
         reader.readAsDataURL(file);
     };
-
     const handleEditorChange = (editorState: EditorState) => {
         setDescription(editorState);
     };
 
-    // Format buttons
+    // Format buttons for the editor
     const handleBoldClick = () => {
         const newState = RichUtils.toggleInlineStyle(description, "BOLD");
         setDescription(newState);
@@ -95,43 +176,42 @@ const CreateProject = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-    
+
         const descriptionRaw = convertToRaw(description.getCurrentContent());
         const formattedDescription = JSON.stringify(descriptionRaw);
-        // const formattedDescription =descriptionRaw
-    
+
         // Validate required fields
         if (!title || !formattedDescription || !techStack.length || !user?._id) {
             toast.error("Please fill all the required fields");
             return;
         }
-    
-        // Use a default image if none is provided
-        const defaultImage = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmVzm1S8TmLAangS-uDMc6ks_q-rzqHdO1qg&s";
-    
+
         const payload = {
             title,
             description: formattedDescription,
             githubUrl,
             liveUrl,
             techStack,
-            image: defaultImage,
+            image: image ,
             authorId: user._id,
         };
-    
+
         try {
-            const response = axios.post("/api/projects/create-project", payload);
-    
-            toast.promise(response, {
-                loading: "Creating project...",
-                success: () => {
-                    router.push("/user/my-projects"); // ✅ redirect after success
-                    return "Project created successfully!";
-                },
-                error: (err: any) => err.response?.data?.message || "Failed to create project",
-            });
+            toast.promise(
+                axios.put(`/api/projects/${projectId}`, payload),
+                {
+                    loading: "Updating project...",
+                    success: () => {
+                        router.push("/user/my-projects");
+                        return "Project updated successfully!";
+                    },
+                    error: (err: any) =>
+                        err.response?.data?.message || "Failed to update project",
+                }
+            );
+        
         } catch (error) {
-            console.error("Project creation error:", error);
+            console.error("Project update error:", error);
             toast.error("An unexpected error occurred");
         }
     };
@@ -141,9 +221,10 @@ const CreateProject = () => {
         tech.toLowerCase().includes(newTechInput.toLowerCase())
     );
 
+
     return (
         <div className="max-w-4xl mx-auto p-6">
-            <h1 className="text-3xl font-bold mb-6 text-primary">Create New Project</h1>
+            <h1 className="text-3xl font-bold mb-6 text-primary">Edit Project</h1>
             <form onSubmit={handleSubmit} className="space-y-6">
                 <input
                     type="text"
@@ -155,68 +236,16 @@ const CreateProject = () => {
                 />
 
                 <DraftEditor description={description} setDescription={setDescription}/>
-                {/* <textarea
-                    disabled
-                    value={draftToHtml(convertToRaw(description.getCurrentContent()))}
-                ></textarea>
-                <div
-                    className="prose max-w-none"
-                    dangerouslySetInnerHTML={{
-                        __html: draftToHtml(convertToRaw(description.getCurrentContent()))
-                    }}
-                /> */}
                 {/* <div className="border-2 border-base-300 p-5 rounded-lg shadow-lg">
                     //Toolbar
                     <div className="flex space-x-4 mb-6">
-                        <button
-                            type="button"
-                            onClick={handleBoldClick}
-                            className="btn btn-outline btn-sm text-xl font-bold text-primary hover:bg-primary-focus hover:text-white transition-all duration-300"
-                        >
-                            B
-                        </button>
-                        <button
-                            type="button"
-                            onClick={handleItalicClick}
-                            className="btn btn-outline btn-sm text-xl font-semibold text-primary hover:bg-primary-focus hover:text-white transition-all duration-300"
-                        >
-                            I
-                        </button>
-                        <button
-                            type="button"
-                            onClick={handleUnderlineClick}
-                            className="btn btn-outline btn-sm text-xl text-primary hover:bg-primary-focus hover:text-white transition-all duration-300"
-                        >
-                            U
-                        </button>
-                        <button
-                            type="button"
-                            onClick={handleStrikethroughClick}
-                            className="btn btn-outline btn-sm text-xl text-primary hover:bg-primary-focus hover:text-white transition-all duration-300"
-                        >
-                            S
-                        </button>
-                        <button
-                            type="button"
-                            onClick={handleBulletListClick}
-                            className="btn btn-outline btn-sm text-xl text-primary hover:bg-primary-focus hover:text-white transition-all duration-300"
-                        >
-                            •
-                        </button>
-                        <button
-                            type="button"
-                            onClick={handleNumberedListClick}
-                            className="btn btn-outline btn-sm text-xl text-primary hover:bg-primary-focus hover:text-white transition-all duration-300"
-                        >
-                            1.
-                        </button>
-                        <button
-                            type="button"
-                            onClick={handleHeadingClick}
-                            className="btn btn-outline btn-sm text-xl text-primary hover:bg-primary-focus hover:text-white transition-all duration-300"
-                        >
-                            H1
-                        </button>
+                        <button type="button" onClick={handleBoldClick} className="btn btn-outline btn-sm text-xl font-bold text-primary">B</button>
+                        <button type="button" onClick={handleItalicClick} className="btn btn-outline btn-sm text-xl font-semibold text-primary">I</button>
+                        <button type="button" onClick={handleUnderlineClick} className="btn btn-outline btn-sm text-xl text-primary">U</button>
+                        <button type="button" onClick={handleStrikethroughClick} className="btn btn-outline btn-sm text-xl text-primary">S</button>
+                        <button type="button" onClick={handleBulletListClick} className="btn btn-outline btn-sm text-xl text-primary">•</button>
+                        <button type="button" onClick={handleNumberedListClick} className="btn btn-outline btn-sm text-xl text-primary">1.</button>
+                        <button type="button" onClick={handleHeadingClick} className="btn btn-outline btn-sm text-xl text-primary">H1</button>
                     </div>
 
                     <hr className="text-base-content my-4" />
@@ -227,7 +256,7 @@ const CreateProject = () => {
                             editorState={description}
                             onChange={handleEditorChange}
                             placeholder="Enter detailed project description..."
-                            className="border-2 border-base-300 p-4 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300"
+                            className="border-2 border-base-300 p-4 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                     </div>
                 </div> */}
@@ -306,22 +335,26 @@ const CreateProject = () => {
                 </div>
 
                 <div>
-                    <label className="block mb-2">Project Image</label>
-                    <img src={image} alt="preview" className="w-40 h-40 object-cover rounded-xl mb-2" />
-                    <input
-                        type="file"
-                        accept="image/*"
-                        onChange={handleImageChange}
-                        className="file-input file-input-bordered w-full"
-                    />
+                <label className="block mb-2">Project Image</label>
+                        {image && image !== "" ? (
+                            <img src={image} alt="preview" className="w-40 h-40 object-cover rounded-xl mb-2" />
+                        ) : (
+                            <div className="w-40 h-40 bg-gray-200 rounded-xl mb-2">No Image</div> // Optional: fallback UI
+                        )}
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={handleImageChange}
+                            className="w-full"
+                        />
                 </div>
 
                 <button className="btn btn-primary w-full py-3 rounded-lg text-white font-bold" type="submit">
-                    Create Project
+                    Update Project
                 </button>
             </form>
         </div>
     );
-};
+}
 
-export default CreateProject;
+export default EditProject

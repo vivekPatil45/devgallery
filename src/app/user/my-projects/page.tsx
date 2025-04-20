@@ -285,7 +285,7 @@ const MyProjectsPage = () => {
                                 </div>
                             </td>
                             <td className="flex gap-2">
-                                <Link href={`/projects/edit/${project._id}`} passHref>
+                                <Link href={`/user/projects/edit/?id=${project._id}`} passHref>
                                     <button className="btn btn-xs btn-primary">
                                         <FaEdit />
                                     </button>
