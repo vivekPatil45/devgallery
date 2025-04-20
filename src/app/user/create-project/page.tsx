@@ -4,13 +4,17 @@ import { Editor, EditorState, RichUtils, convertToRaw } from "draft-js";
 import { useUser } from "@/context/UserContext";
 import "draft-js/dist/Draft.css";
 import { techStackList } from "@/utils/constants";
+import toast from "react-hot-toast";
+import axios from "axios";
 
-const defaultImage = "/demo.png"; // Replace with your default image
+const defaultImage = "/bg.png"; // Replace with your default image
 
 interface CreateProjectProps {}
 
 const CreateProject: React.FC<CreateProjectProps> = () => {
     const { user } = useUser();
+    // console.log(user);
+    
     const [title, setTitle] = useState<string>("");
     const [description, setDescription] = useState<EditorState>(EditorState.createEmpty());
     const [githubUrl, setGithubUrl] = useState<string>("");
@@ -20,7 +24,8 @@ const CreateProject: React.FC<CreateProjectProps> = () => {
     const [image, setImage] = useState<string>(defaultImage);
 
     // Predefined tech stack list
-
+    console.log(description.getCurrentContent());
+    
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -86,29 +91,43 @@ const CreateProject: React.FC<CreateProjectProps> = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-
+    
         const descriptionRaw = convertToRaw(description.getCurrentContent());
+        const formattedDescription = JSON.stringify(descriptionRaw);
+    
+        // Validate required fields
+        if (!title || !formattedDescription || !techStack.length || !user?._id) {
+            toast.error("Please fill all the required fields");
+            return;
+        }
+    
+        // Use a default image if none is provided
+        const defaultImage = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmVzm1S8TmLAangS-uDMc6ks_q-rzqHdO1qg&s";
+    
         const payload = {
             title,
-            description: JSON.stringify(descriptionRaw), // Save raw JSON of the description
+            description: formattedDescription,
             githubUrl,
             liveUrl,
             techStack,
-            images: [image], // Only one image
-            authorId: user.id, // Assuming user has an ID
+            image: defaultImage,
+            authorId: user._id,
         };
-
-        const res = await fetch("/api/projects", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload),
-        });
-
-        const data = await res.json();
-        if (res.ok) {
-            alert("Project created!");
-        } else {
-            alert(data.message || "Something went wrong.");
+    
+        try {
+            const response = axios.post("/api/projects/create-project", payload);
+    
+            toast.promise(response, {
+                loading: "Creating project...",
+                success: () => {
+                    // You can redirect or reset form here
+                    return "Project created successfully!";
+                },
+                error: (err: any) => err.response?.data?.message || "Failed to create project",
+            });
+        } catch (error) {
+            console.error("Project creation error:", error);
+            toast.error("An unexpected error occurred");
         }
     };
 
