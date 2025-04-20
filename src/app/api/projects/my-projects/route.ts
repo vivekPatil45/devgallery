@@ -1,6 +1,8 @@
+import dbConfig from "@/middlewares/db.config";
 import Project from "@/model/Project.model";
 import { NextRequest, NextResponse } from "next/server";
 
+dbConfig();
 
 
 export async function GET(req: NextRequest){

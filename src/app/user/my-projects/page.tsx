@@ -4,6 +4,7 @@ import { techStackList } from "@/utils/constants";
 import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { FaGithub, FaExternalLinkAlt, FaEdit, FaTrash, FaEye } from "react-icons/fa";
 
 interface Project {
@@ -195,10 +196,22 @@ const MyProjectsPage = () => {
 
 
     const deleteProject = (id: string) => {
-        const confirm = window.confirm("Are you sure you want to delete this project?");
-        if (confirm) {
-        setProjects((prev) => prev.filter((p) => p.id !== id));
-        }
+
+      const confirmDelete = window.confirm("Are you sure you want to delete this project?");
+      if (!confirmDelete) return;
+      const deletePromise = axios.delete(`/api/projects/${id}`);
+
+      toast.promise(deletePromise, {
+        loading: "Deleting project...",
+        success: () => {
+          // Optimistically update the UI after deletion
+          setProjects((prev) => prev.filter((p) => p._id !== id));
+          return "Project deleted successfully";
+        },
+        error: (err:any) => err.response?.data?.message || "Error deleting project",
+      });
+
+    
     };
 
 
