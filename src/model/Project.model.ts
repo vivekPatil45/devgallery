@@ -8,6 +8,8 @@ export interface IProject extends Document {
   techStack: string[];
   image?: string;
   authorId: mongoose.Types.ObjectId;
+  likes: mongoose.Types.ObjectId[]; // Array of Like ObjectIds
+  comments: mongoose.Types.ObjectId[]; // Array of Comment ObjectIds
   createdAt: Date;
   updatedAt: Date;
 }
@@ -28,6 +30,12 @@ const ProjectSchema = new Schema<IProject>(
       ref: 'User',
       required: true,
     },
+    likes: [
+      { type: mongoose.Schema.Types.ObjectId, ref: 'Like' }, // Reference to the Like model (user who liked the project)
+    ],
+    comments: [
+      { type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }, // Reference to the Comment model (comments for the project)
+    ],
   },
   { timestamps: true }
 );
