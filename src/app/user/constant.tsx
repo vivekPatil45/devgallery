@@ -21,7 +21,7 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
   },
   {
     title: "My Projects",
-    path: "/user/projects",
+    path: "/user/my-projects",
     icon: <IconFileText width="24" height="24" />,
   },
   {

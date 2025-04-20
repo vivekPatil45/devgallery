@@ -6,6 +6,7 @@ import "draft-js/dist/Draft.css";
 import { techStackList } from "@/utils/constants";
 import toast from "react-hot-toast";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const defaultImage = "/bg.png"; // Replace with your default image
 
@@ -15,6 +16,7 @@ const CreateProject: React.FC<CreateProjectProps> = () => {
     const { user } = useUser();
     // console.log(user);
     
+    const router = useRouter();
     const [title, setTitle] = useState<string>("");
     const [description, setDescription] = useState<EditorState>(EditorState.createEmpty());
     const [githubUrl, setGithubUrl] = useState<string>("");
@@ -120,7 +122,7 @@ const CreateProject: React.FC<CreateProjectProps> = () => {
             toast.promise(response, {
                 loading: "Creating project...",
                 success: () => {
-                    // You can redirect or reset form here
+                    router.push("/user/my-projects"); // ✅ redirect after success
                     return "Project created successfully!";
                 },
                 error: (err: any) => err.response?.data?.message || "Failed to create project",

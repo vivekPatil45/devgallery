@@ -23,7 +23,7 @@ const UserDashboardPage = () => {
         <DashboardCard
           title="My Projects"
           icon={<IconFileText />}
-          path="/user/projects"
+          path="/user/my-projects"
         />
         <DashboardCard
           title="Create Project"
