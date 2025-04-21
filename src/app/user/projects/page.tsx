@@ -5,6 +5,7 @@ import axios from 'axios';
 import ProjectCard from '@/components/ProjectCard';
 import { FaSearch, FaFilter, FaFolderOpen } from 'react-icons/fa';
 
+
 const ProjectsPage = () => {
     const [projects, setProjects] = useState<any[]>([]);
     const [search, setSearch] = useState('');

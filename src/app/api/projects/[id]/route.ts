@@ -36,8 +36,85 @@ export async function GET(
         const { id } = await params;
 
         console.log("Fetching project with id:", id);
+        // const project = await Project.findById(id)
+        //     .populate({
+        //         path: 'authorId',
+        //         select: 'name profileImage',
+        //     })
+        //     .populate({
+        //         path: 'likes',
+        //         select: 'userId', // only include userId from Like document
+        //     })
+        //     .populate({
+        //         path: 'comments',
+        //         select: 'text authorId', // include only text and authorId
+        //         populate: {
+        //             path: 'authorId',
+        //             select: 'name profileImage', // include name and profileImage of user
+        //         },
+        //     });'
 
-        const project = await Project.findById(id);
+
+        const project = await Project.findById(id)
+            .populate('authorId','name  profileImage')
+            // .populate('likes',)
+
+//         const project = await Project.findById(id)
+//   .populate({
+//     path: 'authorId',
+//     model: 'User',
+//     select: 'name profileImage',
+//   })
+//   .populate({
+//     path: 'likes',
+//     model: 'Like',
+//     select: 'userId', // Only userId field from Like
+//     populate: {
+//       path: 'userId',
+//       model: 'User',
+//       select: 'name profileImage',
+//     },
+//   })
+//   .populate({
+//     path: 'comments',
+//     model: 'Comment',
+//     select: 'text authorId', // Only text and authorId from Comment
+//     populate: {
+//       path: 'authorId',
+//       model: 'User',
+//       select: 'name profileImage',
+//     },
+//   });
+
+
+
+
+
+        //     const project = await Project.findById(id)
+        // .populate({
+        //     path: 'authorId',
+        //     select: 'name _id profileImage',
+        //     model: 'User'
+        // })
+        // .populate({
+        //     path: 'likes',
+        //     populate: {
+        //     path: 'userId',
+        //     select: 'name _id profileImage',
+        //     model: 'User'
+        //     }
+        // })
+        // .populate({
+        //     path: 'comments',
+        //     populate: {
+        //     path: 'authorId',
+        //     select: 'name _id profileImage',
+        //     model: 'User'
+        //     }
+        // });
+        
+            
+        
 
         if (!project) {
             return NextResponse.json({ message: "Project not found" }, { status: 404 });

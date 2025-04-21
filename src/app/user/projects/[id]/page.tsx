@@ -17,8 +17,14 @@ import {
 import 'draft-js/dist/Draft.css';
 import { FaCode } from 'react-icons/fa6';
 
+
+
+
+
+
 const ViewProjectPage = () => {
     const { id } = useParams();
+
     const [project, setProject] = useState<any>(null);
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
@@ -44,6 +50,8 @@ const ViewProjectPage = () => {
 
         if (id) fetchProject();
     }, [id]);
+    console.log(project);
+    
 
     if (!project) return <div className="text-center mt-10 text-lg text-gray-500">Loading project...</div>;
 
