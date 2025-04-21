@@ -290,7 +290,7 @@ const MyProjectsPage = () => {
                                         <FaEdit />
                                     </button>
                                 </Link>
-                                <Link href={`/projects/${project._id}`} passHref>
+                                <Link href={`/user/projects/${project._id}`} passHref>
                                     <button className="btn btn-xs btn-info">
                                         <FaEye />
                                     </button>
