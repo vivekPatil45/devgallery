@@ -59,7 +59,7 @@ export async function GET(
                 },
             });
 
-        console.log(project);
+        // console.log(project);
         
 
     

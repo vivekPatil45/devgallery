@@ -120,45 +120,6 @@ const EditProject = () => {
         reader.onloadend = () => setImage(reader.result as string);
         reader.readAsDataURL(file);
     };
-    const handleEditorChange = (editorState: EditorState) => {
-        setDescription(editorState);
-    };
-
-    // Format buttons for the editor
-    const handleBoldClick = () => {
-        const newState = RichUtils.toggleInlineStyle(description, "BOLD");
-        setDescription(newState);
-    };
-
-    const handleItalicClick = () => {
-        const newState = RichUtils.toggleInlineStyle(description, "ITALIC");
-        setDescription(newState);
-    };
-
-    const handleUnderlineClick = () => {
-        const newState = RichUtils.toggleInlineStyle(description, "UNDERLINE");
-        setDescription(newState);
-    };
-
-    const handleStrikethroughClick = () => {
-        const newState = RichUtils.toggleInlineStyle(description, "STRIKETHROUGH");
-        setDescription(newState);
-    };
-
-    const handleBulletListClick = () => {
-        const newState = RichUtils.toggleBlockType(description, "unordered-list-item");
-        setDescription(newState);
-    };
-
-    const handleNumberedListClick = () => {
-        const newState = RichUtils.toggleBlockType(description, "ordered-list-item");
-        setDescription(newState);
-    };
-
-    const handleHeadingClick = () => {
-        const newState = RichUtils.toggleBlockType(description, "header-one");
-        setDescription(newState);
-    };
 
     // Tech Stack Logic
     const handleAddTechStack = (tech: string) => {

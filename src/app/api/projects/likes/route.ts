@@ -6,6 +6,7 @@ import Comment from "@/model/Comment.model";
 
 dbConfig();
 
+//req for like the project by user
 export async function POST(req: NextRequest) {
     try {
         const { projectId, userId } = await req.json();
@@ -88,3 +89,52 @@ export async function POST(req: NextRequest) {
         );
     }
 }
+
+//req for the get liked projects
+
+export async function GET(req: NextRequest) {
+    try {
+        const { searchParams } = new URL(req.url);
+        const userId = searchParams.get('id');
+  
+        if (!userId) {
+            return NextResponse.json(
+            { message: 'User ID is required' },
+            { status: 400 }
+            );
+        }
+  
+  
+  
+        // Fetch all likes for this user and populate the project details
+        const likedDocs = await Like.find({ userId }).populate('projectId');
+    
+        // Extract only valid (non-null) project objects
+        const likedProjects = await Promise.all(
+            likedDocs
+              .map(async (doc) => {
+                const project = doc.projectId;
+                if (project !== null) {
+                  // Populate the likes array in each project
+                  const populatedProject = await Project.findById(project._id).populate('likes')
+                        .populate('authorId','name profileImage');
+                  return populatedProject;
+                }
+                return null;
+              })
+              .filter((project) => project !== null) // Ensure only valid projects are included
+          );
+        console.log("like ",likedProjects);
+        
+    
+        return NextResponse.json({ projects: likedProjects }, { status: 200 });
+    } catch (error: any) {
+        console.error('Error fetching liked projects:', error);
+        return NextResponse.json(
+            { message: 'Server error', error: error.message || error },
+            { status: 500 }
+        );
+    }
+}
+
+

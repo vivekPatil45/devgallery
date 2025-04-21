@@ -5,7 +5,7 @@ import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { FaGithub, FaExternalLinkAlt, FaEdit, FaTrash, FaEye } from "react-icons/fa";
+import { FaGithub, FaExternalLinkAlt, FaEdit, FaTrash, FaEye, FaLink, FaFolderOpen, FaSearch, FaFilter } from "react-icons/fa";
 
 interface Project {
   _id: string;
@@ -179,7 +179,7 @@ const MyProjectsPage = () => {
       };
 
       fetchProjects();
-  }, []);
+    }, []);
     
 
     const filteredProjects = projects.filter(
@@ -197,19 +197,19 @@ const MyProjectsPage = () => {
 
     const deleteProject = (id: string) => {
 
-      const confirmDelete = window.confirm("Are you sure you want to delete this project?");
-      if (!confirmDelete) return;
-      const deletePromise = axios.delete(`/api/projects/${id}`);
+        const confirmDelete = window.confirm("Are you sure you want to delete this project?");
+        if (!confirmDelete) return;
+        const deletePromise = axios.delete(`/api/projects/${id}`);
 
-      toast.promise(deletePromise, {
-        loading: "Deleting project...",
-        success: () => {
-          // Optimistically update the UI after deletion
-          setProjects((prev) => prev.filter((p) => p._id !== id));
-          return "Project deleted successfully";
-        },
-        error: (err:any) => err.response?.data?.message || "Error deleting project",
-      });
+        toast.promise(deletePromise, {
+            loading: "Deleting project...",
+            success: () => {
+            // Optimistically update the UI after deletion
+            setProjects((prev) => prev.filter((p) => p._id !== id));
+            return "Project deleted successfully";
+            },
+            error: (err:any) => err.response?.data?.message || "Error deleting project",
+        });
 
     
     };
@@ -219,28 +219,41 @@ const MyProjectsPage = () => {
     const uniqueTechStack = techStackList;
     return (
         <div>
-            <h1 className="text-3xl font-semibold text-center">My Projects</h1>
+            <h1 className="text-3xl font-bold text-center  text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent  flex items-center justify-center gap-2 mb-6">
+                <FaFolderOpen className="text-primary" />
+                My Projects
+            </h1>
 
             <div className="flex flex-wrap justify-between items-center my-4 gap-4">
-                <input
-                    type="text"
-                    placeholder="Search projects..."
-                    className="input input-bordered w-full max-w-md"
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                />
-                <select
-                    className="select select-bordered max-w-xs"
+               {/* Search Input with Icon */}
+                <label className="input input-bordered flex items-center gap-2 w-full max-w-md">
+                    <FaSearch className="text-base-content/60" />
+                    <input
+                        type="text"
+                        className="grow"
+                        placeholder="Search projects..."
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                    />
+                </label>
+                {/* Filter Dropdown with Icon */}
+                <label className="input input-bordered flex items-center gap-2 max-w-xs">
+                    <FaFilter className="text-base-content/60" />
+                    <select
+                    className="grow"
                     value={techFilter}
                     onChange={(e) => setTechFilter(e.target.value)}
-                >
+                    >
                     <option value="">All Tech Stacks</option>
                     {uniqueTechStack.map((tech, i) => (
                         <option key={i} value={tech}>
                         {tech}
                         </option>
                     ))}
-                </select>
+                    </select>
+                </label>
+  
+
             </div>
 
             <div className="overflow-x-auto bg-base-200 p-4 rounded-lg shadow-md">
@@ -272,13 +285,13 @@ const MyProjectsPage = () => {
                             </td>
                             <td>
                                 <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-                                <FaExternalLinkAlt className="text-xl text-primary hover:scale-110 transition-transform" />
+                                <FaLink className="text-xl text-primary hover:scale-110 transition-transform" />
                                 </a>
                             </td>
                             <td>
                                 <div className="flex flex-wrap gap-1">
                                 {project.techStack.slice(0,2).map((tech, idx) => (
-                                    <span key={idx} className="badge badge-outline text-xs">
+                                    <span key={idx} className="badge badge-outline badge-primary text-xs">
                                     {tech}
                                     </span>
                                 ))}
