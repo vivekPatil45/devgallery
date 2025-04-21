@@ -49,20 +49,21 @@ const SideNav = ({ children }: { children: React.ReactNode }) => {
                     </React.Fragment>
                 ))}
                 </div>
+                
                 <div className="flex-none lg:hidden">
-                <label
-                    htmlFor="my-drawer-3"
-                    aria-label="open sidebar"
-                    className="btn btn-square btn-ghost"
-                >
-                    <IconMenu className="h-6 w-6 text-base-content" />
-                </label>
+                    <label
+                        htmlFor="my-drawer-3"
+                        aria-label="open sidebar"
+                        className="btn btn-square btn-ghost"
+                    >
+                        <IconMenu className="h-6 w-6 text-base-content" />
+                    </label>
                 </div>
 
                 <div className="flex justify-between space-x-2  lg:hidden px-2">
                     <h1 className="text-xl font-bold flex items-center">
-                        <span className="h-7 w-7  ">
-                        <IconCode size={30} className="text-secondary" />
+                        <span className="h-7 w-7 mr-1 bg-base-200 ">
+                            <IconCode size={30} className="text-base" />
                         </span>
                         <span className="text-primary">Dev</span>
                         <span className="text-accent">Gallery</span>

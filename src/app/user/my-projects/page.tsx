@@ -5,156 +5,22 @@ import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { FaGithub, FaExternalLinkAlt, FaEdit, FaTrash, FaEye, FaLink, FaFolderOpen, FaSearch, FaFilter } from "react-icons/fa";
+import { FaGithub, FaEdit, FaTrash, FaEye, FaLink, FaFolderOpen, FaSearch, FaFilter } from "react-icons/fa";
 
 interface Project {
-  _id: string;
-  title: string;
-  description: any; // Assuming it's stored in rich text JSON format
-  githubUrl?: string;
-  liveUrl?: string;
-  techStack: string[];
-  image?: string;
-  authorId: string;
-  likes: string[];
-  comments: string[];
-  createdAt: string;
-  updatedAt: string;
+    _id: string;
+    title: string;
+    description: any; // Assuming it's stored in rich text JSON format
+    githubUrl?: string;
+    liveUrl?: string;
+    techStack: string[];
+    image?: string;
+    authorId: string;
+    likes: string[];
+    comments: string[];
+    createdAt: string;
+    updatedAt: string;
 }
-
-// const tempProjects: Project[] = [
-//   {
-//     id: "1",
-//     title: "DevLinkNest",
-//     description: "A hub for developer tools and free resources.",
-//     likes: 120,
-//     comments: 25,
-//     github: "https://github.com/example/devlinknest",
-//     live: "https://devlinknest.vercel.app",
-//     techStack: ["Next.js", "Tailwind CSS", "MongoDB"],
-//   },
-//   {
-//     id: "2",
-//     title: "MedTrack",
-//     description: "Medical record management system using Java.",
-//     likes: 78,
-//     comments: 14,
-//     github: "https://github.com/example/medtrack",
-//     live: "https://medtrack.vercel.app",
-//     techStack: ["Java", "Servlet", "MySQL"],
-//   },
-//   {
-//     id: "3",
-//     title: "CodeCanvas",
-//     description: "Showcase your websites & interact with others.",
-//     likes: 200,
-//     comments: 45,
-//     github: "https://github.com/example/codecanvas",
-//     live: "https://codecanvas.vercel.app",
-//     techStack: ["React", "Firebase", "Tailwind CSS"],
-//   },
-//   {
-//     id: "4",
-//     title: "FitTrackPro",
-//     description: "A fitness and nutrition tracking app.",
-//     likes: 95,
-//     comments: 18,
-//     github: "https://github.com/example/fittrackpro",
-//     live: "https://fittrackpro.vercel.app",
-//     techStack: ["Vue.js", "Node.js", "Express", "MongoDB"],
-//   },
-//   {
-//     id: "5",
-//     title: "EduQuizzer",
-//     description: "A quiz and learning platform for students.",
-//     likes: 130,
-//     comments: 22,
-//     github: "https://github.com/example/eduquizzer",
-//     live: "https://eduquizzer.vercel.app",
-//     techStack: ["Angular", "Firebase", "Bootstrap"],
-//   },
-//   {
-//     id: "6",
-//     title: "TravelMate",
-//     description: "Plan and share travel itineraries with ease.",
-//     likes: 85,
-//     comments: 19,
-//     github: "https://github.com/example/travelmate",
-//     live: "https://travelmate.vercel.app",
-//     techStack: ["Next.js", "Supabase", "Tailwind CSS"],
-//   },
-//   {
-//     id: "7",
-//     title: "FinDash",
-//     description: "Finance dashboard with analytics and insights.",
-//     likes: 145,
-//     comments: 29,
-//     github: "https://github.com/example/findash",
-//     live: "https://findash.vercel.app",
-//     techStack: ["React", "D3.js", "Express", "PostgreSQL"],
-//   },
-//   {
-//     id: "8",
-//     title: "ResumeBuilderAI",
-//     description: "Generate professional resumes with AI help.",
-//     likes: 165,
-//     comments: 32,
-//     github: "https://github.com/example/resumebuilderai",
-//     live: "https://resumebuilderai.vercel.app",
-//     techStack: ["Next.js", "OpenAI API", "MongoDB"],
-//   },
-//   {
-//     id: "9",
-//     title: "InstaClone",
-//     description: "Instagram clone with real-time chat.",
-//     likes: 210,
-//     comments: 60,
-//     github: "https://github.com/example/instaclone",
-//     live: "https://instaclone.vercel.app",
-//     techStack: ["React", "Socket.IO", "Firebase", "Tailwind CSS"],
-//   },
-//   {
-//     id: "10",
-//     title: "DocuVault",
-//     description: "Secure document storage and sharing system.",
-//     likes: 72,
-//     comments: 13,
-//     github: "https://github.com/example/docuvault",
-//     live: "https://docuvault.vercel.app",
-//     techStack: ["Python", "Flask", "SQLite"],
-//   },
-//   {
-//     id: "11",
-//     title: "ShopEase",
-//     description: "E-commerce platform with cart and payment features.",
-//     likes: 180,
-//     comments: 40,
-//     github: "https://github.com/example/shopease",
-//     live: "https://shopease.vercel.app",
-//     techStack: ["MERN", "Redux", "Stripe API"],
-//   },
-//   {
-//     id: "12",
-//     title: "Taskify",
-//     description: "Collaborative task management and to-do app.",
-//     likes: 99,
-//     comments: 16,
-//     github: "https://github.com/example/taskify",
-//     live: "https://taskify.vercel.app",
-//     techStack: ["Svelte", "Node.js", "MongoDB"],
-//   },
-//   {
-//     id: "13",
-//     title: "BlogNest",
-//     description: "Personal blogging platform with Markdown support.",
-//     likes: 110,
-//     comments: 20,
-//     github: "https://github.com/example/blognest",
-//     live: "https://blognest.vercel.app",
-//     techStack: ["Next.js", "Prisma", "PostgreSQL"],
-//   },
-// ];
-
 
 const MyProjectsPage = () => {
     const {user} = useUser();
@@ -215,8 +81,8 @@ const MyProjectsPage = () => {
     };
 
 
-    // const uniqueTechStack = [...new Set(projects.flatMap((p) => p.techStack))];
-    const uniqueTechStack = techStackList;
+    const uniqueTechStack = [...new Set(projects.flatMap((p) => p.techStack))];
+    // const uniqueTechStack = techStackList;
     return (
         <div>
             <h1 className="text-3xl font-bold text-center  text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent  flex items-center justify-center gap-2 mb-6">
@@ -237,12 +103,12 @@ const MyProjectsPage = () => {
                     />
                 </label>
                 {/* Filter Dropdown with Icon */}
-                <label className="input input-bordered flex items-center gap-2 max-w-xs">
+                <label className="input input-bordered flex items-center gap-2 max-w-xs ">
                     <FaFilter className="text-base-content/60" />
                     <select
-                    className="grow"
-                    value={techFilter}
-                    onChange={(e) => setTechFilter(e.target.value)}
+                        className="grow bg-base-100"
+                        value={techFilter}
+                        onChange={(e) => setTechFilter(e.target.value)}
                     >
                     <option value="">All Tech Stacks</option>
                     {uniqueTechStack.map((tech, i) => (
@@ -252,7 +118,6 @@ const MyProjectsPage = () => {
                     ))}
                     </select>
                 </label>
-  
 
             </div>
 
@@ -329,22 +194,22 @@ const MyProjectsPage = () => {
                 </table>
             </div>
             <div className="flex justify-center items-center mt-4">
-        <button
-          className="btn btn-sm mx-2"
-          onClick={() => paginate(currentPage - 1)}
-          disabled={currentPage === 1}
-        >
-          Previous
-        </button>
-        <span className="text-lg">Page {currentPage}</span>
-        <button
-          className="btn btn-sm mx-2"
-          onClick={() => paginate(currentPage + 1)}
-          disabled={indexOfLast >= filteredProjects.length}
-        >
-          Next
-        </button>
-      </div>
+                <button
+                className="btn btn-sm mx-2"
+                onClick={() => paginate(currentPage - 1)}
+                disabled={currentPage === 1}
+                >
+                Previous
+                </button>
+                <span className="text-lg">Page {currentPage}</span>
+                <button
+                    className="btn btn-sm mx-2"
+                    onClick={() => paginate(currentPage + 1)}
+                    disabled={indexOfLast >= filteredProjects.length}
+                >
+                    Next
+                </button>
+            </div>
         </div>
     );
 };

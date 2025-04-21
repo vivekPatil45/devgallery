@@ -5,6 +5,7 @@ import Link from 'next/link';
 import axios from 'axios';
 import { FaGithub, FaHeart, FaLink } from 'react-icons/fa';
 import { useUser } from '@/context/UserContext';
+import toast from 'react-hot-toast';
 
 interface ProjectCardProps {
   project: {
@@ -54,9 +55,11 @@ const ProjectCard: React.FC<{ project: ProjectCardProps['project'] }> = ({ proje
         if (response.data.status === 'liked') {
             setLiked(true);
             setLikeCount((prev) => prev + 1);
+            toast.success('You liked the project 💖');
         } else if (response.data.status === 'unliked') {
             setLiked(false);
             setLikeCount((prev) => Math.max(0, prev - 1)); // Prevent going below 0
+            toast('You unliked the project', { icon: '💔' });
         }
         } catch (error) {
         console.error('Error toggling like:', error);

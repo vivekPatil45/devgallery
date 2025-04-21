@@ -1,177 +1,67 @@
 export const techStackList = [
     // Programming Languages
-    "JavaScript", 
-    "TypeScript", 
-    "Python", 
-    "Java", 
-    "C++", 
-    "C", 
-    "Ruby", 
-    "PHP", 
-    "Go", 
-    "Rust", 
-    "Swift", 
-    "Kotlin", 
-    "Objective-C", 
-    "Dart", 
-    "R", 
-    "Shell", 
-    "Scala", 
-    "Lua", 
-    "Perl", 
-    "Haskell", 
-    "Elixir", 
-
-    // Frontend
-    "React", 
-    "Next.js", 
-    "Vue.js", 
-    "Angular", 
-    "Svelte", 
-    "HTML", 
-    "CSS", 
-    "Tailwind CSS", 
-    "Bootstrap", 
-    "Material-UI", 
-    "Chakra UI", 
-    "Styled Components", 
-    "SASS", 
-    "JQuery", 
-    "Web Components",
-
-    // Backend
-    "Node.js", 
-    "Express", 
-    "NestJS", 
-    "Django", 
-    "Flask", 
-    "Ruby on Rails", 
-    "Spring Boot", 
-    "ASP.NET Core", 
-    "Laravel", 
-    "FastAPI", 
-    "Koa.js", 
-    "Hapi.js",
-
+    "JavaScript", "TypeScript", "Python", "Java", "C++", "C", "Ruby", "PHP", "Go", "Rust",
+    "Swift", "Kotlin", "Objective-C", "Dart", "R", "Shell", "Scala", "Lua", "Perl", "Haskell", "Elixir",
+  
+    // Frontend Frameworks & Libraries
+    "React", "Next.js", "Vue.js", "Angular", "Svelte", "Web Components", "JQuery",
+  
+    // Frontend UI Libraries
+    "ShadCN UI", "DaisyUI", "Flowbite", "Material-UI", "Chakra UI", "Bootstrap", "Tailwind CSS", 
+    "Styled Components", "SASS", "PostCSS",
+  
+    // HTML & CSS
+    "HTML", "CSS", "CSS Grid", "CSS Flexbox",
+  
+    // Backend Frameworks / Libraries
+    "Node.js", "Express.js", "NestJS", "Koa.js", "Hapi.js", "Django", "Flask", "Ruby on Rails", 
+    "Spring Boot", "ASP.NET Core", "Laravel", "FastAPI",
+  
+    // APIs
+    "REST API", "GraphQL", "GraphQL Subscriptions", "Apollo Client", "Apollo Server", "Axios", 
+    "Swagger", "Postman",
+  
     // Databases
-    "MongoDB", 
-    "MySQL", 
-    "PostgreSQL", 
-    "SQLite", 
-    "OracleDB", 
-    "Firebase", 
-    "Redis", 
-    "Cassandra", 
-    "MariaDB", 
-    "CouchDB", 
-    "DynamoDB", 
-
+    "MongoDB", "MySQL", "SQL", "PostgreSQL", "SQLite", "OracleDB", "Firebase", "Redis", 
+    "Cassandra", "MariaDB", "CouchDB", "DynamoDB", "Supabase",
+  
+    // Cloud Storage & Platforms
+    "AWS", "Google Cloud Platform (GCP)", "Azure", "Heroku", "Vercel", 
+    "AWS S3", "Cloudinary", "Firebase Storage", "Azure Blob Storage",
+  
     // Version Control
-    "Git", 
-    "GitHub", 
-    "GitLab", 
-    "Bitbucket", 
-    "SVN", 
-
-    // DevOps & Containerization
-    "Docker", 
-    "Kubernetes", 
-    "CI/CD", 
-    "Jenkins", 
-    "Travis CI", 
-    "CircleCI", 
-    "Terraform", 
-    "Ansible", 
-    "Nginx", 
-    "Apache", 
-    "AWS", 
-    "Google Cloud Platform (GCP)", 
-    "Azure", 
-    "Heroku", 
-    "Vercel", 
-
-    // Cloud & Storage
-    "AWS S3", 
-    "Cloudinary", 
-    "Firebase Storage", 
-    "Azure Blob Storage", 
-
-    // API & GraphQL
-    "REST API", 
-    "GraphQL", 
-    "Apollo Client", 
-    "Apollo Server", 
-    "Axios", 
-    "Swagger", 
-    "Postman",
-
-    // Testing
-    "Jest", 
-    "Mocha", 
-    "Chai", 
-    "Cypress", 
-    "Jasmine", 
-    "Enzyme", 
-    "React Testing Library", 
-    "Supertest",
-
+    "Git", "GitHub", "GitLab", "Bitbucket", "SVN",
+  
+    // DevOps & Deployment
+    "Docker", "Kubernetes", "CI/CD", "Jenkins", "Travis CI", "CircleCI", "Terraform", 
+    "Ansible", "Nginx", "Apache",
+  
+    // Testing Libraries
+    "Jest", "Mocha", "Chai", "Cypress", "Jasmine", "Enzyme", 
+    "React Testing Library", "Supertest",
+  
     // Authentication & Security
-    "JWT", 
-    "OAuth", 
-    "Passport.js", 
-    "Bcrypt", 
-    "Argon2", 
-    "JWT Authentication", 
-    "OAuth2", 
-
+    "JWT", "OAuth", "OAuth2", "Passport.js", "Bcrypt", "Argon2", "JWT Authentication",
+  
     // Mobile Development
-    "React Native", 
-    "Flutter", 
-    "Ionic", 
-    "Xamarin", 
-
+    "React Native", "Flutter", "Ionic", "Xamarin",
+  
     // Machine Learning & AI
-    "TensorFlow", 
-    "Keras", 
-    "PyTorch", 
-    "Scikit-learn", 
-    "OpenCV", 
-    "NLTK", 
-    "spaCy", 
-    "HuggingFace Transformers", 
-
+    "TensorFlow", "Keras", "PyTorch", "Scikit-learn", "OpenCV", "NLTK", "spaCy", 
+    "HuggingFace Transformers",
+  
     // Data Science & Analytics
-    "Pandas", 
-    "NumPy", 
-    "Matplotlib", 
-    "Seaborn", 
-    "SciPy", 
-    "Jupyter Notebooks", 
-    "Tableau", 
-    "Power BI", 
-
+    "Pandas", "NumPy", "Matplotlib", "Seaborn", "SciPy", "Jupyter Notebooks", 
+    "Tableau", "Power BI",
+  
     // Blockchain
-    "Solidity", 
-    "Ethereum", 
-    "Web3.js", 
-    "Truffle", 
-    "Ganache", 
-    "IPFS", 
-
-    // Other
-    "WebAssembly", 
-    "GraphQL Subscriptions", 
-    "Elasticsearch", 
-    "Vim", 
-    "VSCode", 
-    "Sublime Text", 
-    "Figma", 
-    "Sketch", 
-    "Adobe XD", 
-    "PostCSS", 
-    "CSS Grid", 
-    "CSS Flexbox",
+    "Solidity", "Ethereum", "Web3.js", "Truffle", "Ganache", "IPFS",
+  
+    // Other Tools
+    "WebAssembly", "Elasticsearch", "Vim", "VSCode", "Sublime Text", 
+    "Figma", "Sketch", "Adobe XD"
 ];
+
 export function formatTimeAgo(input: string | Date): string {
     const date = typeof input === 'string' ? new Date(input) : input;
     const now = new Date();

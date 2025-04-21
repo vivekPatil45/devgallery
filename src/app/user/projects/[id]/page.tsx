@@ -1,5 +1,4 @@
 'use client';
-
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'next/navigation';
@@ -9,13 +8,11 @@ import {
     FaGithub,
     FaLink,
     FaHeart,
-    FaProjectDiagram,
     FaTools,
     FaAlignLeft,
     FaComments,
 } from 'react-icons/fa';
 import 'draft-js/dist/Draft.css';
-import { FaCode } from 'react-icons/fa6';
 import { formatTimeAgo } from '@/utils/constants';
 import { useUser } from '@/context/UserContext';
 import toast from 'react-hot-toast';
@@ -51,6 +48,24 @@ interface Project {
     createdAt?: string;
     updatedAt?: string;
 }
+const defaultProject: Project = {
+    _id: "",
+    title: "",
+    image: "",
+    description: "",
+    githubUrl: "",
+    liveUrl: "",
+    techStack: [],
+    authorId: {
+        _id: "",
+        name: "",
+        profileImage: "",
+    },
+    likes: [],
+    comments: [],
+    createdAt: "",
+    updatedAt: "",
+};
 
 const ViewProjectPage = () => {
     const { id } = useParams();
@@ -59,7 +74,7 @@ const ViewProjectPage = () => {
     const userId = user?._id?.toString();
     const [liked, setLiked] = useState(false);
     const [likeCount, setLikeCount] = useState(0);
-    const [project, setProject] = useState<Project>(null);
+    const [project, setProject] = useState<Project>(defaultProject);
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
     const [commentText, setCommentText] = useState('');
 

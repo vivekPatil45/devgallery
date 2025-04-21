@@ -21,52 +21,7 @@ const EditProject = () => {
     const [image, setImage] = useState<string>("");
 
     const projectId = searchParams?.get("id");
-    // console.log(projectId);
     
-    // useEffect(() => {
-    //     if (!projectId) {
-    //         toast.error("No project ID found.");
-    //         return;
-    //     }
-
-    //     // Fetch project data when the component is mounted
-    //     const fetchProjectData = async () => {
-    //         try {
-    //             const response:AxiosResponse = await axios.get(`/api/projects/${projectId}`);
-        
-    //             const project = response.data.project;
-    //             console.log("Description - ",project.description);
-                
-
-    //             // Ensure description is in the expected format before setting it
-    //                 setTitle(project.title);
-    //                 setGithubUrl(project.githubUrl || "");
-    //                 setLiveUrl(project.liveUrl || "");
-    //                 setTechStack(project.techStack || []);
-    //                 setImage(project.image || "");
-    //                 // Ensure description exists before converting
-    //                 if (project.description) {
-    //                     if (typeof project.description === 'string') {
-    //                         const descriptionState = convertFromRaw(JSON.parse(project.description)); // Parse if it's a string
-    //                         setDescription(EditorState.createWithContent(descriptionState));
-    //                     } else {
-    //                         const descriptionState = convertFromRaw(project.description); // Directly use if it's already an object
-    //                         setDescription(EditorState.createWithContent(descriptionState));
-    //                     }
-    //                 } else {
-    //                     setDescription(EditorState.createEmpty()); // Set an empty editor state if description is not available
-    //                 }
-
-                   
-    //         } catch (error) {
-    //             console.error("Error fetching project data:", error);
-    //             toast.error("Failed to load project data.");
-    //         }
-    //     };
-
-    //     fetchProjectData();
-    // }, []);
-   
     useEffect(() => {
         if (!projectId) {
             toast.error("No project ID found.");
@@ -197,30 +152,6 @@ const EditProject = () => {
                 />
 
                 <DraftEditor description={description} setDescription={setDescription}/>
-                {/* <div className="border-2 border-base-300 p-5 rounded-lg shadow-lg">
-                    //Toolbar
-                    <div className="flex space-x-4 mb-6">
-                        <button type="button" onClick={handleBoldClick} className="btn btn-outline btn-sm text-xl font-bold text-primary">B</button>
-                        <button type="button" onClick={handleItalicClick} className="btn btn-outline btn-sm text-xl font-semibold text-primary">I</button>
-                        <button type="button" onClick={handleUnderlineClick} className="btn btn-outline btn-sm text-xl text-primary">U</button>
-                        <button type="button" onClick={handleStrikethroughClick} className="btn btn-outline btn-sm text-xl text-primary">S</button>
-                        <button type="button" onClick={handleBulletListClick} className="btn btn-outline btn-sm text-xl text-primary">•</button>
-                        <button type="button" onClick={handleNumberedListClick} className="btn btn-outline btn-sm text-xl text-primary">1.</button>
-                        <button type="button" onClick={handleHeadingClick} className="btn btn-outline btn-sm text-xl text-primary">H1</button>
-                    </div>
-
-                    <hr className="text-base-content my-4" />
-
-                   // Draft.js Editor
-                    <div className="editor-container mb-6">
-                        <Editor
-                            editorState={description}
-                            onChange={handleEditorChange}
-                            placeholder="Enter detailed project description..."
-                            className="border-2 border-base-300 p-4 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        />
-                    </div>
-                </div> */}
 
                 {/* Tech Stack section */}
                 <div className="mb-8">

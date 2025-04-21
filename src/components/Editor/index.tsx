@@ -1,11 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
-  Editor,
-  EditorState,
-  RichUtils,
-  convertToRaw,
-  convertFromRaw,
-  ContentBlock,
+    Editor,
+    EditorState,
+    RichUtils,
+    ContentBlock,
 } from "draft-js";
 import Toolbar from "./Toolbar";
 
@@ -142,11 +140,11 @@ const DraftEditor = ({ description, setDescription }: RichTextEditorProps) => {
 
     return (
         <div
-            className="max-w-3xl mx-auto p-4 bg-base-100 shadow-xl rounded-xl"
+            className="max-w-3xl mx-auto p-4 bg-base-300  shadow-xl rounded-xl"
             onClick={() => editor.current?.focus()}
         >
             <Toolbar description={description} setDescription={setDescription} />
-            <div className="border border-base-300 p-4 rounded-md min-h-[200px]">
+            <div className=" bg-base-100 p-4 rounded-md min-h-[200px]">
                 <Editor
                     ref={editor}
                     placeholder="Write something awesome..."

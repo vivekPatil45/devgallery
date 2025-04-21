@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { Editor, EditorState, RichUtils, convertToRaw } from "draft-js";
+import { EditorState, RichUtils, convertToRaw } from "draft-js";
 import { useUser } from "@/context/UserContext";
 import "draft-js/dist/Draft.css";
 import { techStackList } from "@/utils/constants";
@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import DraftEditor from "@/components/Editor";
-import draftToHtml from "draftjs-to-html";
+import { FaPlusCircle } from "react-icons/fa";
 
 const defaultImage = "/bg.png"; // Replace with your default image
 
@@ -27,8 +27,6 @@ const CreateProject = () => {
     const [newTechInput, setNewTechInput] = useState<string>("");
     const [image, setImage] = useState<string>(defaultImage);
 
-    // Predefined tech stack list
-    console.log(description.getCurrentContent());
     
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,46 +37,7 @@ const CreateProject = () => {
         reader.readAsDataURL(file);
     };
 
-    const handleEditorChange = (editorState: EditorState) => {
-        setDescription(editorState);
-    };
-
-    // Format buttons
-    const handleBoldClick = () => {
-        const newState = RichUtils.toggleInlineStyle(description, "BOLD");
-        setDescription(newState);
-    };
-
-    const handleItalicClick = () => {
-        const newState = RichUtils.toggleInlineStyle(description, "ITALIC");
-        setDescription(newState);
-    };
-
-    const handleUnderlineClick = () => {
-        const newState = RichUtils.toggleInlineStyle(description, "UNDERLINE");
-        setDescription(newState);
-    };
-
-    const handleStrikethroughClick = () => {
-        const newState = RichUtils.toggleInlineStyle(description, "STRIKETHROUGH");
-        setDescription(newState);
-    };
-
-    const handleBulletListClick = () => {
-        const newState = RichUtils.toggleBlockType(description, "unordered-list-item");
-        setDescription(newState);
-    };
-
-    const handleNumberedListClick = () => {
-        const newState = RichUtils.toggleBlockType(description, "ordered-list-item");
-        setDescription(newState);
-    };
-
-    const handleHeadingClick = () => {
-        const newState = RichUtils.toggleBlockType(description, "header-one");
-        setDescription(newState);
-    };
-
+    
     // Tech Stack Logic
     const handleAddTechStack = (tech: string) => {
         if (tech && !techStack.includes(tech)) {
@@ -143,7 +102,14 @@ const CreateProject = () => {
 
     return (
         <div className="max-w-4xl mx-auto p-6">
-            <h1 className="text-3xl font-bold mb-6 text-primary">Create New Project</h1>
+            <div className="text-center mb-8">
+                <h1 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-cyan-500 inline-flex items-center gap-3 justify-center">
+                    <FaPlusCircle className="text-blue-500 text-3xl" />
+                    Create New Project
+                </h1>
+                <p className="text-base-content/70 mt-2 text-sm">Share your amazing work with the developer community</p>
+            </div>
+            
             <form onSubmit={handleSubmit} className="space-y-6">
                 <input
                     type="text"
@@ -153,10 +119,9 @@ const CreateProject = () => {
                     onChange={(e) => setTitle(e.target.value)}
                     required
                 />
-
+                
                 <DraftEditor description={description} setDescription={setDescription}/>
-              
-
+        
                 {/* Tech Stack section */}
                 <div className="mb-8">
                     <h2 className="text-lg font-semibold mb-4">Tech Stack</h2>

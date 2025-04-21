@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import { EditorState, RichUtils } from "draft-js";
 import {
     FaBold,
@@ -24,7 +24,7 @@ type Tool = {
     label: string;
     style: string;
     method: "inline" | "block";
-    icon?: JSX.Element;
+    icon?: ReactElement;
 };
 
 type ToolbarProps = {
@@ -83,7 +83,7 @@ const Toolbar: React.FC<ToolbarProps> = ({ description, setDescription }) => {
     };
 
     return (
-        <div className="flex flex-wrap gap-2 mb-4 p-2 bg-base-200 rounded-lg shadow">
+        <div className="flex flex-wrap gap-2 mb-4 p-2 border bg-base-200 rounded-lg shadow">
             {tools.map((item, idx) => (
                 <button
                 key={idx}
