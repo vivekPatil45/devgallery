@@ -2,22 +2,8 @@
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
 import ProjectCard from '@/components/ProjectCard';
-
-
-interface ProjectCardProps {
-    project: {
-        _id: string;
-        title: string;
-        image: string;
-        author: string;
-        githubUrl?: string;
-        liveUrl?: string;
-        techStack: string[];
-        likes:string[]
-    };
-}
+import { FaSearch, FaFilter, FaFolderOpen } from 'react-icons/fa';
 
 const ProjectsPage = () => {
     const [projects, setProjects] = useState<any[]>([]);
@@ -56,33 +42,46 @@ const ProjectsPage = () => {
 
     return (
         <div className="max-w-7xl mx-auto p-6">
-            <h1 className="text-3xl font-bold mb-6 text-center">Explore Projects</h1>
+            {/* Heading */}
+            <div className="text-center mb-8">
+                <h1 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent inline-flex items-center gap-3 justify-center">
+                    <FaFolderOpen className="text-primary text-3xl" />
+                    Explore Projects
+                </h1>
+                <p className="text-base-content/70 mt-2 text-sm">Discover projects from the community</p>
+            </div>
 
-            {/* Search and Filter */}
+            {/* Search & Filter */}
             <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
-                <input
-                    type="text"
-                    placeholder="Search by title or description..."
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                    className="input input-bordered w-full md:max-w-sm"
-                />
+                <div className="relative w-full md:max-w-sm">
+                    <FaSearch className="absolute z-10 left-3 top-3 text-base-content/50 text-sm" />
+                    <input
+                        type="text"
+                        placeholder="Search by title or description..."
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                        className="input input-bordered w-full pl-10"
+                    />
+                </div>
 
-                <select
-                    value={techFilter}
-                    onChange={(e) => {
-                        setTechFilter(e.target.value);
-                        setCurrentPage(1);
-                    }}
-                    className="select select-bordered w-full md:max-w-xs"
-                >
-                    <option value="">All Tech Stacks</option>
-                    {allTechs.map((tech, idx) => (
-                        <option key={idx} value={tech}>
-                            {tech}
-                        </option>
-                    ))}
-                </select>
+                <div className="relative w-full md:max-w-xs">
+                    <FaFilter className="absolute  z-10 left-3 top-3 text-base-content/50 text-sm" />
+                    <select
+                        value={techFilter}
+                        onChange={(e) => {
+                            setTechFilter(e.target.value);
+                            setCurrentPage(1);
+                        }}
+                        className="select select-bordered w-full pl-10"
+                    >
+                        <option value="">All Tech Stacks</option>
+                        {allTechs.map((tech, idx) => (
+                            <option key={idx} value={tech}>
+                                {tech}
+                            </option>
+                        ))}
+                    </select>
+                </div>
             </div>
 
             {/* Project Cards */}
@@ -91,8 +90,7 @@ const ProjectsPage = () => {
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {currentProjects.map((project) => (
-                        <ProjectCard key={project._id} project={project}/>
-                        
+                        <ProjectCard key={project._id} project={project} />
                     ))}
                 </div>
             )}

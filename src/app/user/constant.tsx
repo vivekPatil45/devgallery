@@ -34,4 +34,9 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
     path: "/user/favorites",
     icon: <IconHeart width="24" height="24" />,
   },
+  {
+    title: "Explore Projects",
+    path: "/user/projects",
+    icon: <IconSearch width="24" height="24" />,
+  },
 ];

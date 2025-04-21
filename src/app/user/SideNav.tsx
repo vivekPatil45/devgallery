@@ -42,7 +42,8 @@ const SideNav = ({ children }: { children: React.ReactNode }) => {
                     </span>
                     <Link href={`/${pathSegments.slice(0, index + 1).join("/")}`}>
                         <span className="text-base capitalize hover:text-primary transition">
-                        {segment.replace(/-/g, " ")}
+                        { /^[a-f\d]{24}$/i.test(segment)?'dev':segment.replace(/-/g, " ")}
+                        {/* {segment.replace(/-/g, " ")} */}
                         </span>
                     </Link>
                     </React.Fragment>
@@ -60,8 +61,8 @@ const SideNav = ({ children }: { children: React.ReactNode }) => {
 
                 <div className="flex justify-between space-x-2  lg:hidden px-2">
                     <h1 className="text-xl font-bold flex items-center">
-                        <span className="h-7 w-7 ">
-                        <IconCode size={30} className="text-base" />
+                        <span className="h-7 w-7  ">
+                        <IconCode size={30} className="text-secondary" />
                         </span>
                         <span className="text-primary">Dev</span>
                         <span className="text-accent">Gallery</span>
