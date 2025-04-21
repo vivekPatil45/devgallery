@@ -16,16 +16,48 @@ import {
 } from 'react-icons/fa';
 import 'draft-js/dist/Draft.css';
 import { FaCode } from 'react-icons/fa6';
+import { formatTimeAgo } from '@/utils/constants';
+import { useUser } from '@/context/UserContext';
+interface User {
+    _id: string;
+    name: string;
+    profileImage: string;
+}
 
+interface Like {
+    _id: string;
+    userId: string;
+}
 
+interface Comment {
+    _id: string;
+    text: string;
+    authorId: User;
+    createdAt:Date
+}
 
-
-
+interface Project {
+    _id: string;
+    title: string;
+    image: string;
+    description: string;
+    githubUrl?: string;
+    liveUrl?: string;
+    techStack: string[];
+    authorId: User;
+    likes: Like[];
+    comments: Comment[];
+    createdAt?: string;
+    updatedAt?: string;
+}
 
 const ViewProjectPage = () => {
     const { id } = useParams();
-
-    const [project, setProject] = useState<any>(null);
+    const { user } = useUser();
+    const userId = user?._id?.toString();
+    const [liked, setLiked] = useState(false);
+    const [likeCount, setLikeCount] = useState(0);
+    const [project, setProject] = useState<Project>(null);
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
     useEffect(() => {
@@ -34,6 +66,11 @@ const ViewProjectPage = () => {
                 const res = await axios.get(`/api/projects/${id}`);
                 const data = res.data.project;
                 setProject(data);
+                setLikeCount(data.likes.length || 0);
+                if (userId) {
+                    const isLiked = data.likes.some((like: Like) => like.userId === userId);
+                    setLiked(isLiked);
+                }
 
                 if (data.description) {
                     const raw = typeof data.description === 'string'
@@ -43,6 +80,7 @@ const ViewProjectPage = () => {
                     const rawContent = convertFromRaw(raw);
                     setEditorState(EditorState.createWithContent(rawContent));
                 }
+
             } catch (error) {
                 console.error('Error fetching project:', error);
             }
@@ -50,7 +88,32 @@ const ViewProjectPage = () => {
 
         if (id) fetchProject();
     }, [id]);
-    console.log(project);
+
+    
+    const handleLikeToggle = async () => {
+        if (!userId) {
+            alert('You must be logged in to like a project.');
+            return;
+        }
+    
+        try {
+            const response = await axios.post('/api/projects/likes', {
+                projectId: project._id,
+                userId,
+            });
+    
+            if (response.data.status === 'liked') {
+                setLiked(true);
+                setLikeCount(prev => prev + 1);
+            } else if (response.data.status === 'unliked') {
+                setLiked(false);
+                setLikeCount(prev => Math.max(0, prev - 1));
+            }
+        } catch (error) {
+            console.error('Error toggling like:', error);
+        }
+    };
+    
     
 
     if (!project) return <div className="text-center mt-10 text-lg text-gray-500">Loading project...</div>;
@@ -65,7 +128,7 @@ const ViewProjectPage = () => {
                 <div className="flex items-center gap-4 mb-4">
                     {/* Avatar */}
                     <img
-                        src={project.author?.profileImage || '/image.png'}
+                        src={project.authorId.profileImage || '/image.png'}
                         alt="Author"
                         className="w-12 h-12 rounded-full object-cover border-2 border-primary"
                     />
@@ -73,15 +136,18 @@ const ViewProjectPage = () => {
                         <h1 className="text-3xl font-bold flex items-center gap-2 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
                             {project.title}
                         </h1>
-                        <p className="text-sm text-base-content/70">by {project.author?.name || 'Anonymous'}</p>
+                        <p className="text-sm text-base-content/70">by {project.authorId?.name || 'Anonymous'}</p>
                     </div>
                 </div>
 
                 {/* Total Likes */}
-                <div className="flex items-center gap-2 text-pink-600 font-semibold mb-6">
-                    <FaHeart className="text-xl" />
-                    <span>{project.totalLikes || 0} Likes</span>
-                </div>
+                    <button
+                            onClick={handleLikeToggle}
+                            className="flex items-center cursor-pointer gap-2 text-pink-600 font-semibold mb-6 hover:scale-105 transition-all"
+                    >
+                            <FaHeart className={`text-xl transition ${liked ? 'text-red-500' : 'text-base-content/50'}`} />
+                        <span>{likeCount} </span>
+                    </button>
             </div>
 
             {/* Image */}
@@ -155,28 +221,19 @@ const ViewProjectPage = () => {
 
                 {/* Comments List (Static for demo) */}
                 <div className="space-y-4 mb-6">
-                    {[{
-                        name: 'Jane Doe',
-                        avatar: '/image.png',
-                        comment: 'Really cool project! 🔥',
-                        timestamp: new Date('2025-04-20T10:30:00')
-                    }, {
-                        name: 'John Smith',
-                        avatar: '/image.png',
-                        comment: 'I love the design and tech stack!',
-                        timestamp: new Date('2025-04-21T09:00:00')
-                    }].map((c, i) => (
+                    {project.comments.map((c, i) => (
                         <div key={i} className="flex items-start gap-3 p-4 bg-base-200 rounded-lg">
                             <img
-                                src={c.avatar}
+                                src={c.authorId.profileImage ||" "}
                                 alt="avatar"
                                 className="w-10 h-10 rounded-full object-cover"
                             />
                             <div>
-                                <p className="font-semibold text-base-content">{c.name}</p>
-                                <p className="text-sm text-base-content/80">{c.comment}</p>
+                                <p className="font-semibold text-base-content">{c.authorId.name}</p>
+                                <p className="text-sm text-base-content/80">{c.text}</p>
                                 <p className="text-xs text-base-content/60 mt-1">
-                                    {c.timestamp.toLocaleString()}
+                                    {formatTimeAgo(c.createdAt)}
+                                    
                                 </p>
                             </div>
                         </div>

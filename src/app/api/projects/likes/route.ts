@@ -42,18 +42,20 @@ export async function POST(req: NextRequest) {
                 (like) => like.toString() !== existingLike._id.toString()
             );
             await project.save();
-        // await Comment.create([
-        //     {
-        //       userId,
-        //       projectId,
-        //       text: "This project is really impressive! 🔥",
-        //     },
-        //     {
-        //       userId,
-        //       projectId,
-        //       text: "Loved the tech stack and implementation 💡",
-        //     },
-        //   ]);
+            /*
+            await Comment.create([
+                {
+                authorId: userId,
+                projectId,
+                text: "This project is really impressive! 🔥",
+                },
+                {
+                authorId: userId,
+                projectId,
+                text: "Loved the tech stack and implementation 💡",
+                },
+            ]);
+            */
 
             return NextResponse.json(
                 { status: "unliked", likeCount: project.likes.length ,likedId:existingLike._id},
