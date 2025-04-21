@@ -18,6 +18,7 @@ import 'draft-js/dist/Draft.css';
 import { FaCode } from 'react-icons/fa6';
 import { formatTimeAgo } from '@/utils/constants';
 import { useUser } from '@/context/UserContext';
+import toast from 'react-hot-toast';
 interface User {
     _id: string;
     name: string;
@@ -54,11 +55,13 @@ interface Project {
 const ViewProjectPage = () => {
     const { id } = useParams();
     const { user } = useUser();
+
     const userId = user?._id?.toString();
     const [liked, setLiked] = useState(false);
     const [likeCount, setLikeCount] = useState(0);
     const [project, setProject] = useState<Project>(null);
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
+    const [commentText, setCommentText] = useState('');
 
     useEffect(() => {
         const fetchProject = async () => {
@@ -113,6 +116,63 @@ const ViewProjectPage = () => {
             console.error('Error toggling like:', error);
         }
     };
+    const handleCommentChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setCommentText(event.target.value);
+    };
+
+    const handlePostComment = async (event: React.FormEvent) => {
+        event.preventDefault();
+    
+        if (!commentText.trim()) {
+            toast.error('Please enter a comment');
+            return;
+        }
+    
+        if (!userId) {
+            toast.error('You must be logged in to comment.');
+            return;
+        }
+    
+        const promise = axios.post('/api/projects/comments', {
+            projectId: project._id,
+            userId,
+            text: commentText,
+        });
+    
+        toast.promise(promise, {
+            loading: 'Posting comment...',
+            success: (res) => {
+                const newComment: Comment = {
+                    _id: res.data.comment._id,
+                    text: commentText,
+                    authorId: {
+                        _id: userId,
+                        name: user?.name?.toString() || 'Anonymous',
+                        profileImage: user?.profileImage || '',
+                    },
+                    createdAt: new Date(),
+                };
+    
+                setProject(prev => {
+                    if (!prev) return prev;
+                    return {
+                        ...prev,
+                        comments: [...prev.comments, newComment],
+                    };
+                });
+    
+                setCommentText('');
+                setTimeout(() => {
+                    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+                }, 200);
+    
+                return 'Comment posted successfully! ✅';
+            },
+            error: (err) =>
+                err?.response?.data?.message || 'Failed to post comment ❌',
+        });
+    };
+    
     
     
 
@@ -241,10 +301,12 @@ const ViewProjectPage = () => {
                 </div>
 
                 {/* Add Comment Input */}
-                <form className="flex flex-col gap-3">
+                <form className="flex flex-col gap-3" onSubmit={handlePostComment}>
                     <textarea
                         className="textarea textarea-bordered resize-none h-24"
                         placeholder="Leave your comment..."
+                        value={commentText}
+                        onChange={handleCommentChange}
                     ></textarea>
                     <button className="btn btn-primary w-fit self-end">Post Comment</button>
                 </form>
