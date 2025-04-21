@@ -8,14 +8,13 @@ import React, { useState } from "react";
 import Image from "next/image";
 import axios from "axios";
 import {
-    IconCamper,
     IconChevronDown,
     IconChevronRight,
     IconCode,
-    IconFileText,
     IconMenu,
 } from "@tabler/icons-react";
 import { useUser } from "@/context/UserContext";
+import { FaCode } from "react-icons/fa";
 
 const SideNav = ({ children }: { children: React.ReactNode }) => {
     const router = useRouter();
@@ -61,13 +60,13 @@ const SideNav = ({ children }: { children: React.ReactNode }) => {
                 </div>
 
                 <div className="flex justify-between space-x-2  lg:hidden px-2">
-                    <h1 className="text-xl font-bold flex items-center">
-                        <span className="h-7 w-7 mr-1 bg-base-200 ">
-                            <IconCode size={30} className="text-base" />
+                    <h1 className="text-xl font-bold flex items-center gap-1 text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
+                        <span className="h-7 w-7 font-bold flex items-center justify-center rounded">
+                            <FaCode size={30} className="text-primary" />
                         </span>
-                        <span className="text-primary">Dev</span>
-                        <span className="text-accent">Gallery</span>
+                        DevGallery
                     </h1>
+
                     <ThemeToggler />
                 </div>
 
@@ -138,12 +137,16 @@ const SideNav = ({ children }: { children: React.ReactNode }) => {
                 href="/user/dashboard"
                 className="flex h-16 w-full flex-row items-center justify-center space-x-3 border-b border-base-content md:justify-start md:px-6"
                 >
-                <span className="h-7 w-7 rounded-lg bg-base-200">
+                    <h1 className="text-xl font-bold flex items-center gap-1 text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
+                        <span className="h-7 w-7 font-bold flex items-center justify-center rounded">
+                            <FaCode size={30} className="text-primary" />
+                        </span>
+                        DevGallery
+                    </h1>
+                {/* <span className="h-7 w-7 rounded-lg bg-base-200">
                     <IconCode size={30} className="text-base" />
                 
                 </span>
-
-                
                 <span className="text-xl font-bold text-base-content">
                     <h1 className="text-xl font-bold">
                         <span className="text-primary font-extrabold text-xl">
@@ -151,7 +154,7 @@ const SideNav = ({ children }: { children: React.ReactNode }) => {
                         </span>
                         <span className="text-accent font-semibold text-xl">Gallery</span>
                     </h1>
-                </span>
+                </span> */}
                 </Link>
                 <div className="flex flex-col space-y-2 mt-10 md:px-6">
                 {SIDENAV_ITEMS.map((item, idx) => (
@@ -225,7 +228,7 @@ const MenuItem = ({ item }: { item: SideNavItem }) => {
         ) : (
             <Link
             href={item.path}
-            className={`flex flex-row items-center space-x-4 rounded-lg p-2 ${
+            className={`flex flex-row items-center space-x-4 rounded-lg text-base-content/80 p-2 ${
                 item.path === pathname ? activeClasses : inactiveClasses
             }`}
             >

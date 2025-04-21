@@ -2,20 +2,25 @@
 import Link from "next/link";
 import { IconCode } from "@tabler/icons-react";
 import ThemeToggler from "./ThemeToggler";
+import { FaCode } from "react-icons/fa";
 
 const Navbar = () => {
   return (
     <div className="navbar px-10 py-2 bg-base-300">
         <div className="navbar-start">
             <Link href="/" className="space-x-3 flex items-center">
-            <IconCode size={50} className="text-primary" />
+            <FaCode size={45} className="text-primary" />
             <div className="flex flex-col items-start gap-1">
-                <div className="flex items-center gap-[2px]">
+                <h1 className="text-xl font-extrabold flex items-center gap-1 text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
+                    DevGallery
+                </h1>
+             
+                {/* <div className="flex items-center gap-[2px]">
                 <span className="text-primary font-extrabold text-xl">
                     Dev
                 </span>
                 <span className="text-accent font-semibold text-xl">Gallary</span>
-                </div>
+                </div> */}
                 <hr className="w-full border border-base-content" />
                 <span className="text-sm text-base-content/70 italic">
                 Showcase and Explore Web Projects
