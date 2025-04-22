@@ -1,5 +1,6 @@
 "use client";
 import axios, { AxiosResponse } from "axios";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
@@ -113,7 +114,13 @@ const Signup = () => {
             <div className="xl:max-w-7xl bg-base-100 shadow-2xl border border-base-content/10 w-full rounded-xl flex justify-between items-stretch px-5 py-8">
                 {/* Left Image */}
                 <div className="sm:w-[60%] lg:w-[50%] hidden md:flex items-center justify-center">
-                    <img src="/login.png" alt="Signup" className="h-[500px]" />
+                    <Image
+                        src="/login.png"
+                        alt="Signup"
+                        width={500}
+                        height={500}
+                        className="object-contain h-[500px] w-auto"
+                    />
                 </div>
 
                 {/* Signup Form */}

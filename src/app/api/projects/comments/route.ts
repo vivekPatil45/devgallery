@@ -1,3 +1,5 @@
+import "@/model/Like.model"; // <-- Ensures Like schema is registered
+import "@/model/Comment.model";
 import dbConfig from "@/middlewares/db.config";
 import Project from "@/model/Project.model";
 import Comment from "@/model/Comment.model";

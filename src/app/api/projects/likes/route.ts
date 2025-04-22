@@ -2,7 +2,6 @@ import dbConfig from "@/middlewares/db.config";
 import Project from "@/model/Project.model";
 import Like from "@/model/Like.model";
 import { NextRequest, NextResponse } from "next/server";
-import Comment from "@/model/Comment.model";
 
 dbConfig();
 

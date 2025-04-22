@@ -6,6 +6,7 @@ import axios from 'axios';
 import { FaGithub, FaHeart, FaLink } from 'react-icons/fa';
 import { useUser } from '@/context/UserContext';
 import toast from 'react-hot-toast';
+import Image from 'next/image';
 
 interface ProjectCardProps {
   project: {
@@ -69,9 +70,14 @@ const ProjectCard: React.FC<{ project: ProjectCardProps['project'] }> = ({ proje
 
   return (
     <div className="card bg-base-200 border border-base-300 shadow-lg hover:shadow-2xl transition-all duration-300 rounded-xl overflow-hidden text-base-content/70 h-[450px] flex flex-col hover:scale-[1.03] transform ">
-      {/* Image */}
-      <figure className="h-48 overflow-hidden rounded-t-xl">
-        <img src={project.image} alt={project.title} className="w-full h-full object-cover transition-transform duration-300 transform hover:scale-110" />
+      <figure className="h-48 overflow-hidden relative rounded-t-xl">
+        <Image
+          src={project.image}
+          alt={project.title}
+          fill
+          className="object-cover transition-transform duration-300 hover:scale-110"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        />
       </figure>
 
       {/* Content */}
@@ -100,11 +106,14 @@ const ProjectCard: React.FC<{ project: ProjectCardProps['project'] }> = ({ proje
             href={`/user/profile/${project.authorId.name}?id=${project.authorId._id}`}
             className="flex items-center gap-2 text-sm font-semibold hover:text-primary transition"
           >
-            <img
-              alt="Profile"
-              src={project.authorId.profileImage}
-              className="w-8 h-8 rounded-full object-cover border-2 border-base-300 hover:scale-110 transition-all"
-            />
+            <div className="relative w-8 h-8">
+              <Image
+                alt="Profile"
+                src={project.authorId.profileImage}
+                fill
+                className="rounded-full object-cover border-2 border-base-300 hover:scale-110 transition-all"
+              />
+            </div>
             {project.authorId.name || 'User'}
           </Link>
 
