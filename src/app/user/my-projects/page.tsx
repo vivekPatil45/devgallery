@@ -204,26 +204,18 @@ const MyProjectsPage = () => {
                 </div>
             )}
 
-            {/* Pagination */}
-            {!loading && filteredProjects.length > 0 && (
-                <div className="flex justify-center items-center mt-4">
-                    <button
-                        className="btn btn-sm mx-2"
-                        onClick={() => paginate(currentPage - 1)}
-                        disabled={currentPage === 1}
-                    >
-                        Previous
-                    </button>
-                    <span className="text-lg">Page {currentPage}</span>
-                    <button
-                        className="btn btn-sm mx-2"
-                        onClick={() => paginate(currentPage + 1)}
-                        disabled={indexOfLast >= filteredProjects.length}
-                    >
-                        Next
-                    </button>
-                </div>
-            )}
+            <div className="flex justify-center items-center mt-10 flex-wrap gap-2">
+            {Array.from({ length: Math.ceil(filteredProjects.length / projectsPerPage) }, (_, i) => (
+                <button
+                key={i}
+                onClick={() => paginate(i + 1)}
+                className={`btn btn-sm ${currentPage === i + 1 ? "btn-primary" : "btn-outline"}`}
+                >
+                {i + 1}
+                </button>
+            ))}
+            </div>
+
         </div>
     );
 };
