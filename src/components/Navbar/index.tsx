@@ -18,6 +18,7 @@ const Navbar = () => {
             <h1 className="text-xl font-extrabold bg-gradient-to-r from-primary to-secondary text-transparent bg-clip-text">
               DevGallery
             </h1>
+            <hr className="w-full border border-base-content" />
             <span className="text-sm text-base-content/70 italic whitespace-nowrap">
               Showcase and Explore Web Projects
             </span>
@@ -27,7 +28,7 @@ const Navbar = () => {
 
       {/* Desktop Center Menu */}
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1 text-base gap-6">
+        <ul className="menu menu-horizontal px-1 text-base text-base-content gap-6">
           <li><Link href="/projects">Projects</Link></li>
           <li><Link href="/about">About</Link></li>
           <li><Link href="/features">Features</Link></li>
@@ -45,7 +46,7 @@ const Navbar = () => {
       <div className="lg:hidden navbar-end">
         <button
           onClick={() => setMenuOpen(!menuOpen)}
-          className="btn btn-ghost btn-square text-xl"
+          className="btn btn-ghost btn-square  text-base-content text-xl"
         >
           {menuOpen ? <IoClose size={28} /> : <IoMenu size={28} />}
         </button>

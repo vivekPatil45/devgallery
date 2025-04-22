@@ -37,12 +37,12 @@ const Login = () => {
 
                 {/* Left Image Section */}
                 <div className="hidden md:flex md:w-1/2 bg-base-100 justify-center items-center p-4">
-                    <div className="relative w-full h-[500px]">
+                    <div className="relative w-full h-[500px] overflow-hidden ">
                         <Image
                             src="/login.png"
                             alt="Login"
                             fill
-                            className="object-contain"
+                            className="object-cover"
                             sizes="(min-width: 768px) 50vw, 100vw"
                             priority
                         />
@@ -50,16 +50,16 @@ const Login = () => {
                 </div>
 
                 {/* Right Login Form */}
-                <div className="w-full md:w-1/2 p-8 sm:p-12 flex flex-col justify-center">
-                <h1 className="text-3xl sm:text-4xl font-bold text-primary text-center">
+                <div className="w-full md:w-1/2 p-8 sm:p-12 flex flex-col justify-center space-y-6">
+                <h1 className="text-3xl sm:text-4xl font-semibold text-primary text-center mb-4">
                     Welcome Back
                 </h1>
-                <p className="text-base text-base-content/70 text-center mt-2">
-                    Login to continue your journey with <span className="text-secondary font-medium">Dev Gallary</span>
+                <p className="text-base text-base-content/70 text-center mb-6">
+                    Login to continue your journey with <span className="text-secondary font-semibold">Dev Gallary</span>
                 </p>
 
                 <form
-                    className="mt-8 flex flex-col gap-6"
+                    className="space-y-6"
                     onSubmit={(e) => {
                     e.preventDefault();
                     handleSubmit();
@@ -68,7 +68,7 @@ const Login = () => {
                     <input
                     type="email"
                     placeholder="Email"
-                    className="input input-bordered input-primary w-full text-base-content placeholder:text-base-content/60"
+                    className="input input-bordered input-primary w-full text-base-content placeholder:text-base-content/60 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all duration-300"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     required
@@ -76,21 +76,21 @@ const Login = () => {
                     <input
                         type="password"
                         placeholder="Password"
-                        className="input input-bordered input-primary w-full text-base-content placeholder:text-base-content/60"
+                         className="input input-bordered input-primary w-full text-base-content placeholder:text-base-content/60 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all duration-300"
                         value={formData.password}
                         onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                         required
                     />
 
                     <button
-                    type="submit"
-                    className="btn btn-primary w-full hover:scale-[1.02] transition-transform duration-200"
+                        type="submit"
+                        className="btn btn-primary w-full py-3 mt-4 hover:scale-105 transition-transform duration-300 shadow-md"
                     >
-                    Log In
+                        Log In
                     </button>
                 </form>
 
-                <p className="mt-6 text-center text-base text-base-content">
+                <p className="mt-4 text-center text-base text-base-content">
                     {"Don't have an account?"}{" "}
                     <span
                     onClick={() => router.push("/signup")}
