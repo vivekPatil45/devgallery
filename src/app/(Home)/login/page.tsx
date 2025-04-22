@@ -66,12 +66,12 @@ const Login = () => {
                     }}
                 >
                     <input
-                    type="email"
-                    placeholder="Email"
-                    className="input input-bordered input-primary w-full text-base-content placeholder:text-base-content/60 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all duration-300"
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    required
+                        type="email"
+                        placeholder="Email"
+                        className="input input-bordered input-primary w-full text-base-content placeholder:text-base-content/60 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all duration-300"
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        required
                     />
                     <input
                         type="password"

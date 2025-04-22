@@ -40,8 +40,6 @@ const Signup = () => {
             console.error("Signup error:", error);
             toast.error("Failed to create account")
         }
-
-        
     };
 
     const verifyEmail = async () => {
@@ -78,9 +76,6 @@ const Signup = () => {
             toast.error("Something went wrong!!!");
         }
 
-
-
-
         // Simulating OTP send
         const generatedOtp = "123456";
         setOtp(generatedOtp);
@@ -114,8 +109,8 @@ const Signup = () => {
     };
 
     return (
-        <div className="flex justify-center items-center w-full bg-base-200 px-5 py-5 min-h-[calc(100vh-5rem)]">
-            <div className="xl:max-w-7xl bg-base-100 shadow-lg border border-base-content/20 w-full rounded-xl flex justify-between items-stretch px-5 py-8">
+        <div className="flex justify-center items-center w-full bg-base-200 px-4 py-10 min-h-[calc(100vh-5rem)]">
+            <div className="xl:max-w-7xl bg-base-100 shadow-2xl border border-base-content/10 w-full rounded-xl flex justify-between items-stretch px-5 py-8">
                 {/* Left Image */}
                 <div className="sm:w-[60%] lg:w-[50%] hidden md:flex items-center justify-center">
                     <img src="/login.png" alt="Signup" className="h-[500px]" />
@@ -123,24 +118,24 @@ const Signup = () => {
 
                 {/* Signup Form */}
                 <div className="mx-auto w-full lg:w-1/2 flex flex-col justify-center p-2 md:p-8">
-                    <h1 className="text-center text-3xl font-bold text-primary mb-6">
+                    <h1 className="text-center text-3xl font-semibold text-primary mb-4">
                         Create Account
                     </h1>
 
-                    <div className="flex flex-col gap-4">
+                    <div className="flex flex-col gap-4 text-base text-base-content">
                         <input
-                        type="text"
-                        placeholder="Full Name"
-                        className="input input-bordered input-primary w-full"
-                        value={formData.name}
-                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                            type="text"
+                            placeholder="Full Name"
+                            className="input input-bordered input-primary w-full text-base-content placeholder:text-base-content/60 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all duration-300"
+                            value={formData.name}
+                            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                         />
 
                         <div className="flex flex-col sm:flex-row gap-3">
                         <input
                             type="email"
                             placeholder="Email Address"
-                            className="input input-bordered input-primary w-full"
+                            className="input input-bordered input-primary w-full text-base-content placeholder:text-base-content/60 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all duration-300"
                             value={formData.email}
                             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                         />
@@ -158,18 +153,18 @@ const Signup = () => {
                         </div>
 
                         <input
-                        type="file"
-                        className="file-input file-input-bordered w-full"
-                        accept="image/*"
-                        onChange={handleProfileImageChange}
+                            type="file"
+                            className="file-input file-input-bordered w-full text-base-content placeholder:text-base-content/60 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all duration-300"
+                            accept="image/*"
+                            onChange={handleProfileImageChange}
                         />
 
                         <input
-                        type="password"
-                        placeholder="Password"
-                        className="input input-bordered input-primary w-full"
-                        value={formData.password}
-                        onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                            type="password"
+                            placeholder="Password"
+                            className="input input-bordered input-primary w-full text-base-content placeholder:text-base-content/60 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all duration-300"
+                            value={formData.password}
+                            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                         />
 
                         <label className="flex items-center gap-2 cursor-pointer">
@@ -186,11 +181,11 @@ const Signup = () => {
                         </label>
 
                         <button
-                        className="btn btn-primary btn-block"
+                        className="btn btn-primary w-full py-3 mt-4 hover:scale-105 transition-transform duration-300 shadow-md"
                         onClick={handleSubmit}
                         disabled={disabled || !emailVerified}
                         >
-                        Sign Up
+                            Sign Up
                         </button>
 
                         <p className="text-center text-base mt-3">
