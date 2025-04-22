@@ -68,7 +68,7 @@ const ProjectCard: React.FC<{ project: ProjectCardProps['project'] }> = ({ proje
   };
 
   return (
-    <div className="card bg-base-200 border border-base-300 shadow-lg hover:shadow-2xl transition-all duration-300 rounded-xl overflow-hidden text-base-content/70 h-[450px] flex flex-col hover:scale-[1.03] transform transition">
+    <div className="card bg-base-200 border border-base-300 shadow-lg hover:shadow-2xl transition-all duration-300 rounded-xl overflow-hidden text-base-content/70 h-[450px] flex flex-col hover:scale-[1.03] transform ">
       {/* Image */}
       <figure className="h-48 overflow-hidden rounded-t-xl">
         <img src={project.image} alt={project.title} className="w-full h-full object-cover transition-transform duration-300 transform hover:scale-110" />
