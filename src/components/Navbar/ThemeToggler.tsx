@@ -56,10 +56,10 @@ const ThemeToggler = () => {
       <div
         tabIndex={0}
         role="button"
-        className="btn btn-primary text-primary-content flex items-center gap-2"
+        className="btn btn-primary text-primary-content flex items-center rounded-full gap-2 px-4 py-2 shadow-md hover:shadow-lg transition-shadow ease-in-out duration-200"
       >
-        <IconSun />
-        <IconChevronDown />
+        <IconSun  size={20}/>
+        <IconChevronDown size={20} />
       </div>
       <ul
         tabIndex={0}

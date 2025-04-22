@@ -10,7 +10,6 @@ import axios from "axios";
 import {
     IconChevronDown,
     IconChevronRight,
-    IconCode,
     IconMenu,
 } from "@tabler/icons-react";
 import { useUser } from "@/context/UserContext";

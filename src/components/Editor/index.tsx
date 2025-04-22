@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import {
     Editor,
     EditorState,
@@ -154,8 +154,6 @@ const DraftEditor = ({ description, setDescription }: RichTextEditorProps) => {
                     blockStyleFn={myBlockStyleFn}
                     onChange={(newState) => {
                         setDescription(newState);
-                        const content = newState.getCurrentContent();
-                        // console.log("Raw Content:", convertToRaw(content));
                     }}
                 />
             </div>

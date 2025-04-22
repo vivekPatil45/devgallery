@@ -1,4 +1,6 @@
 import { IconCircleChevronRight } from "@tabler/icons-react";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -11,22 +13,30 @@ export default function Home() {
           <p className="max-w-2xl mb-6 font-light text-base-content/70 lg:mb-8 md:text-lg lg:text-xl">
             Explore the creativity of developers, share your own projects, and get inspired by innovative web experiences.
           </p>
-          <a
+          <Link
             href="/projects"
             className="btn btn-primary text-base font-medium text-center rounded-lg mr-4"
           >
             Explore Projects
             <IconCircleChevronRight />
-          </a>
-          <a
+          </Link>
+          <Link
             href="/signup"
             className="btn btn-outline text-base font-medium text-center rounded-lg"
           >
             Share Your Work
-          </a>
+          </Link>
         </div>
         <div className="hidden lg:mt-0 lg:col-span-5 lg:flex ">
-          <img src="/bg.png" alt="Dev Gallary Showcase" className="rounded-2xl shadow-xl " />
+          <div className="relative w-full h-[400px]">
+            <Image
+              src="/bg.png"
+              alt="Dev Gallary Showcase"
+              fill
+              className="rounded-2xl shadow-xl object-contain"
+              priority
+            />
+          </div>
         </div>
       </div>
     </section>

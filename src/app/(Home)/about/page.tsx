@@ -15,10 +15,7 @@ export default function About() {
                 {/* Main Content */}
                 <div className="mt-10 p-8 bg-base-100 shadow-xl rounded-2xl">
                 <p className="text-lg text-base-content/80 leading-relaxed">
-                    Dev Gallary is a dynamic hub for developers to share their web projects, 
-                    explore innovative creations by others, and connect with like-minded 
-                    enthusiasts. Whether you're building passion projects, professional 
-                    portfolios, or experimental ideas, Dev Gallary is your space to shine.
+                {"Dev Gallary is a dynamic hub for developers to share their web projects, explore innovative creations by others, and connect with like-minded enthusiasts. Whether you're building passion projects, professional portfolios, or experimental ideas, Dev Gallary is your space to shine."}
                 </p>
 
                 {/* Key Features */}
@@ -44,9 +41,7 @@ export default function About() {
 
                 {/* Final Call to Action */}
                 <p className="mt-8 text-lg text-base-content/80">
-                Whether you're a seasoned developer or just getting started, Dev Gallary 
-                provides the perfect space to display your work and discover the potential 
-                of the developer community.
+                    {"Whether you're a seasoned developer or just getting started, Dev Gallary provides the perfect space to display your work and discover the potential of the developer community."}
                 </p>
             </div>
         </section>

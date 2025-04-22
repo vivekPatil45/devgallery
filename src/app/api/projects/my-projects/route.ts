@@ -17,7 +17,7 @@ export async function GET(req: NextRequest){
         if (projects.length === 0) {
             return NextResponse.json({ message: "No projects found for this user" }, { status: 404 });
         }
-        console.log(projects);
+        // console.log(projects);
         
         return NextResponse.json({ message: "Projects fetched successfully", projects }, { status: 200 });
 

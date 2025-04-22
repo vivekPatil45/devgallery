@@ -6,7 +6,6 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FaGithub, FaEdit, FaTrash, FaEye, FaLink, FaFolderOpen, FaSearch, FaFilter } from "react-icons/fa";
-import { techStackList } from "@/utils/constants";
 
 interface Project {
     _id: string;

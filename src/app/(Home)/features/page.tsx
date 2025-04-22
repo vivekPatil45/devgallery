@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 
 type Feature = {
@@ -47,13 +48,17 @@ const FeaturesPage: React.FC = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {features.map((feature, index) => (
                     <div key={index} className="card bg-base-100 shadow-xl p-6 flex flex-col items-center">
-                    <img
-                        src={feature.image}
-                        alt={feature.title}
-                        className="w-28 h-28 object-contain mb-4"
-                    />
-                    <h3 className="text-xl font-bold mb-2 text-base-content">{feature.title}</h3>
-                    <p className="text-base-content/70">{feature.description}</p>
+                        <div className="relative w-28 h-28 mb-4">
+                            <Image
+                            src={feature.image}
+                            alt={feature.title}
+                            fill
+                            className="object-contain"
+                            sizes="112px"
+                            />
+                        </div>
+                        <h3 className="text-xl font-bold mb-2 text-base-content">{feature.title}</h3>
+                        <p className="text-base-content/70">{feature.description}</p>
                     </div>
                 ))}
                 </div>

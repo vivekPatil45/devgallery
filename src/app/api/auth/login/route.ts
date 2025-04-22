@@ -7,7 +7,7 @@ import User from "@/model/User.model";
 dbConfig();
 
 const generateToken = (data: object) => {
-  return jwt.sign(data, process.env.JWT_SECRET!, { expiresIn: "1d" });
+    return jwt.sign(data, process.env.JWT_SECRET!, { expiresIn: "1d" });
 };
 
 const setTokenCookie = (response: NextResponse, token: string) => {

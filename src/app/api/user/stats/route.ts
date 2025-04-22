@@ -15,7 +15,7 @@ export async function GET(req: NextRequest) {
       const user = await User.findById(userId).lean();
       if (!user) return NextResponse.json({ error: "User not found" }, { status: 404 });
 
-      console.log(user);
+      // console.log(user);
       
       const userProjects = await Project.find({ authorId: userId }).lean();
       const totalProjects = userProjects.length;

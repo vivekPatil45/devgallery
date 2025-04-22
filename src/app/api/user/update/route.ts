@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import bcrypt from "bcryptjs";
 import dbConfig from "@/middlewares/db.config";
 import User from "@/model/User.model";
 
@@ -24,16 +23,6 @@ export async function PUT(req: NextRequest) {
             return NextResponse.json({ message: "User not found" }, { status: 404 });
         }
 
-        // // If password is being updated, hash it before saving
-        // if (updatedData.password) {
-        // if (updatedData.password.length < 8) {
-        //     return NextResponse.json(
-        //     { message: "Password must be at least 8 characters long" },
-        //     { status: 400 }
-        //     );
-        // }
-        // updatedData.password = await bcrypt.hash(updatedData.password, 10);
-        // }
 
         // If profile image is updated, set new profile image URL
         if (updatedData.profileImage) {

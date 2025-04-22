@@ -124,7 +124,7 @@ export async function GET(req: NextRequest) {
               })
               .filter((project) => project !== null) // Ensure only valid projects are included
           );
-        console.log("like ",likedProjects);
+        // console.log("like ",likedProjects);
         
     
         return NextResponse.json({ projects: likedProjects }, { status: 200 });

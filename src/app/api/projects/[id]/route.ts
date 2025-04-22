@@ -36,7 +36,7 @@ export async function GET(
         // Await the params if required by Next.js (this may depend on your Next.js version)
         const { id } = await params;
 
-        console.log("Fetching project with id:", id);
+        // console.log("Fetching project with id:", id);
 
         const project = await Project.findById(id)
             .populate({

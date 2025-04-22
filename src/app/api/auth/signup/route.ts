@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
 
     try {
         const {formData} = await req.json();
-        console.log(formData);
+        // console.log(formData);
         if (
             !formData.name ||
             !formData.email ||

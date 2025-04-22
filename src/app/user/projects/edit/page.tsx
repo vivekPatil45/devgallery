@@ -1,5 +1,5 @@
 "use client";
-import { Editor, EditorState, RichUtils, convertFromRaw, convertToRaw } from "draft-js";
+import { EditorState, convertFromRaw, convertToRaw } from "draft-js";
 import { useUser } from '@/context/UserContext';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react'

@@ -1,5 +1,6 @@
 "use client";
 import axios, { AxiosResponse } from "axios";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
@@ -36,11 +37,16 @@ const Login = () => {
 
                 {/* Left Image Section */}
                 <div className="hidden md:flex md:w-1/2 bg-base-100 justify-center items-center p-4">
-                <img
-                    src="/login.png"
-                    alt="Login"
-                    className="max-h-[500px] w-auto object-contain"
-                />
+                    <div className="relative w-full h-[500px]">
+                        <Image
+                            src="/login.png"
+                            alt="Login"
+                            fill
+                            className="object-contain"
+                            sizes="(min-width: 768px) 50vw, 100vw"
+                            priority
+                        />
+                    </div>
                 </div>
 
                 {/* Right Login Form */}
@@ -68,12 +74,12 @@ const Login = () => {
                     required
                     />
                     <input
-                    type="password"
-                    placeholder="Password"
-                    className="input input-bordered input-primary w-full text-base-content placeholder:text-base-content/60"
-                    value={formData.password}
-                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                    required
+                        type="password"
+                        placeholder="Password"
+                        className="input input-bordered input-primary w-full text-base-content placeholder:text-base-content/60"
+                        value={formData.password}
+                        onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                        required
                     />
 
                     <button
@@ -85,7 +91,7 @@ const Login = () => {
                 </form>
 
                 <p className="mt-6 text-center text-base text-base-content">
-                    Don't have an account?{" "}
+                    {"Don't have an account?"}{" "}
                     <span
                     onClick={() => router.push("/signup")}
                     className="text-primary font-medium hover:underline cursor-pointer"

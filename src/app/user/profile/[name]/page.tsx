@@ -67,6 +67,7 @@ const PublicUserProfilePage = () => {
                 setUser(userRes.data.user);
                 setProjects(projectsRes.data.projects);
             } catch (err) {
+                console.error(err);
                 toast.error('Failed to load profile');
             } finally {
                 setLoading(false);
