@@ -10,7 +10,7 @@ dbConfig();
 export async function GET(req: NextRequest){
     try {
         const projects = await Project.find({})
-            .populate('authorId', 'name') // populate author name
+            .populate('authorId', 'name profileImage') // populate author name
             .populate('likes',"userId")
             .sort({ createdAt: -1 });
         // console.log(projects);

@@ -8,7 +8,6 @@ export function middleware(req: NextRequest) {
     const isProtectedRoute =
         pathname.startsWith('/create') ||
         pathname.startsWith('/my-projects') ||
-        pathname.startsWith('/settings') ||
         pathname.startsWith('/user');
 
     // If user is logged in and visits a public auth route → redirect to dashboard
