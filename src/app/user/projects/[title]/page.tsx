@@ -1,7 +1,7 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams, useSearchParams } from 'next/navigation';
+import {useSearchParams } from 'next/navigation';
 import { EditorState, convertFromRaw } from 'draft-js';
 import { Editor } from 'draft-js';
 import {
@@ -78,8 +78,7 @@ const Loader = () => {
 };
 
 const ViewProjectPage = () => {
-    const title = useParams();
-   
+
     const searchParams = useSearchParams();
     const id = searchParams.get('id');
     
