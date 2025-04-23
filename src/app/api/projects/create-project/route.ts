@@ -41,10 +41,10 @@ export async function POST(req: NextRequest) {
       { message: "Project created successfully", project: newProject },
       { status: 201 }
     );
-  } catch (error: any) {
-    console.error("Create project error:", error.message || error);
+  } catch (error) {
+    console.error("Create project error:", error);
     return NextResponse.json(
-      { message: "Server error", error: error.message || error },
+      { message: "Server error", error: error },
       { status: 500 }
     );
   }

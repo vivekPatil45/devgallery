@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 dbConfig();
 
-//req for like the project by user
+//POST: toggling like/unlike for a project by a user
 export async function POST(req: NextRequest) {
     try {
         const { projectId, userId } = await req.json();
@@ -80,17 +80,17 @@ export async function POST(req: NextRequest) {
                 { status: 200 }
             );
         }
-    } catch (error: any) {
-        console.error("Error toggling like:", error.message || error);
+    } catch (error) {
+        console.error("Error toggling like:",  error);
         return NextResponse.json(
-        { message: "Server error", error: error.message || error },
+        { message: "Server error", error: error },
         { status: 500 }
         );
     }
 }
 
-//req for the get liked projects
 
+// GET: Fetches all projects liked by a user
 export async function GET(req: NextRequest) {
     try {
         const { searchParams } = new URL(req.url);
@@ -127,10 +127,10 @@ export async function GET(req: NextRequest) {
         
     
         return NextResponse.json({ projects: likedProjects }, { status: 200 });
-    } catch (error: any) {
+    } catch (error) {
         console.error('Error fetching liked projects:', error);
         return NextResponse.json(
-            { message: 'Server error', error: error.message || error },
+            { message: 'Server error', error: error },
             { status: 500 }
         );
     }

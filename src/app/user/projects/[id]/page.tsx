@@ -16,6 +16,7 @@ import 'draft-js/dist/Draft.css';
 import { formatTimeAgo } from '@/utils/constants';
 import { useUser } from '@/context/UserContext';
 import toast from 'react-hot-toast';
+import Image from 'next/image';
 interface User {
     _id: string;
     name: string;
@@ -105,7 +106,7 @@ const ViewProjectPage = () => {
         };
 
         if (id) fetchProject();
-    }, [id]);
+    }, [id,userId]);
 
     
     const handleLikeToggle = async () => {
@@ -123,9 +124,11 @@ const ViewProjectPage = () => {
             if (response.data.status === 'liked') {
                 setLiked(true);
                 setLikeCount(prev => prev + 1);
+                toast.success('You liked the project 💖');
             } else if (response.data.status === 'unliked') {
                 setLiked(false);
                 setLikeCount(prev => Math.max(0, prev - 1));
+                toast('You unliked the project', { icon: '💔' });
             }
         } catch (error) {
             console.error('Error toggling like:', error);
@@ -202,10 +205,12 @@ const ViewProjectPage = () => {
                 {/* Title and Author */}
                 <div className="flex items-center gap-4 mb-4">
                     {/* Avatar */}
-                    <img
+                    <Image
                         src={project.authorId.profileImage || '/image.png'}
                         alt="Author"
-                        className="w-12 h-12 rounded-full object-cover border-2 border-primary"
+                        width={48}
+                        height={48}
+                        className="w-12 h-12 rounded-full object-cover border-2 border-primary hover:scale-110 transition-all"
                     />
                     <div>
                         <h1 className="text-3xl font-bold flex items-center gap-2 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
@@ -226,11 +231,15 @@ const ViewProjectPage = () => {
             </div>
 
             {/* Image */}
-            <img
-                src={project.image}
-                alt="project"
-                className="w-full h-80 object-cover rounded-lg border-2 border-primary shadow-lg mb-8"
-            />
+            {project.image && (
+                <Image
+                    src={project.image}
+                    alt="project"
+                    width={800}
+                    height={300}
+                    className="w-full h-80 object-cover rounded-lg border-2 border-primary shadow-lg mb-8 "
+                />
+            )}
 
             {/* Tech Stack */}
             <div className="mb-8">
@@ -298,9 +307,11 @@ const ViewProjectPage = () => {
                 <div className="space-y-4 mb-6">
                     {project.comments.map((c, i) => (
                         <div key={i} className="flex items-start gap-3 p-4 bg-base-200 rounded-lg">
-                            <img
+                            <Image
                                 src={c.authorId.profileImage ||" "}
                                 alt="avatar"
+                                width={40}
+                                height={40}
                                 className="w-10 h-10 rounded-full object-cover"
                             />
                             <div>

@@ -7,6 +7,7 @@ import toast from 'react-hot-toast';
 import axios,{AxiosResponse} from "axios";
 import { techStackList } from "@/utils/constants";
 import DraftEditor from "@/components/Editor";
+import Image from "next/image";
 
 const EditProject = () => {
     const { user } = useUser();
@@ -65,7 +66,7 @@ const EditProject = () => {
         };
     
         fetchProjectData();
-    }, []);
+    }, [projectId]);
     
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -121,7 +122,7 @@ const EditProject = () => {
                         router.push("/user/my-projects");
                         return "Project updated successfully!";
                     },
-                    error: (err: any) =>
+                    error: (err: unknown) =>
                         err.response?.data?.message || "Failed to update project",
                 }
             );
@@ -229,7 +230,13 @@ const EditProject = () => {
                 <div>
                 <label className="block mb-2">Project Image</label>
                         {image && image !== "" ? (
-                            <img src={image} alt="preview" className="w-40 h-40 object-cover rounded-xl mb-2" />
+                            <Image
+                                src={image}
+                                alt="preview"
+                                width={160}
+                                height={160}
+                                className="w-40 h-40 object-cover rounded-xl mb-2"
+                            />
                         ) : (
                             <div className="w-40 h-40 bg-gray-200 rounded-xl mb-2">No Image</div> // Optional: fallback UI
                         )}

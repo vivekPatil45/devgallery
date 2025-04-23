@@ -35,7 +35,7 @@ interface User {
 interface Project {
     _id: string;
     title: string;
-    description: any;
+    description: string;
     githubUrl?: string;
     liveUrl?: string;
     techStack: string[];
@@ -111,7 +111,7 @@ const PublicUserProfilePage = () => {
                     alt="Profile"
                     width={120}
                     height={120}
-                    className="rounded-full object-cover border-4 border-primary"
+                    className="rounded-full object-cover border-4 border-primary "
                 />
                 <div>
                     <h2 className="text-3xl font-bold text-primary">{user.name}</h2>

@@ -10,7 +10,7 @@ import { FaGithub, FaEdit, FaTrash, FaEye, FaLink, FaFolderOpen, FaSearch, FaFil
 interface Project {
     _id: string;
     title: string;
-    description: any;
+    description: string;
     githubUrl?: string;
     liveUrl?: string;
     techStack: string[];
@@ -70,7 +70,7 @@ const MyProjectsPage = () => {
             setProjects((prev) => prev.filter((p) => p._id !== id));
             return "Project deleted successfully";
         },
-        error: (err: any) => err.response?.data?.message || "Error deleting project",
+        error: (err: unknown) => err.response?.data?.message || "Error deleting project",
         });
     };
 

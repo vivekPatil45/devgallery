@@ -6,8 +6,29 @@ import ProjectCard from '@/components/ProjectCard';
 import { FaSearch, FaFilter, FaFolderOpen, FaRegSadTear } from 'react-icons/fa';
 import { ImSpinner2 } from 'react-icons/im';
 
+type Project = {
+    _id: string;
+    title: string;
+    image: string;
+    authorId: {
+        _id: string;
+        name: string;
+        profileImage: string;
+    };
+    description: string;
+    githubUrl?: string;
+    liveUrl?: string;
+    techStack: string[];
+    likes: {
+      _id: string;
+      userId: string;
+    }[]
+  
+};
+  
+
 const ProjectsPage = () => {
-    const [projects, setProjects] = useState<any[]>([]);
+    const [projects, setProjects] = useState<Project[]>([]);
     const [search, setSearch] = useState('');
     const [techFilter, setTechFilter] = useState('');
     const [currentPage, setCurrentPage] = useState(1);

@@ -1,13 +1,14 @@
-import "@/model/Like.model"; // <-- Ensures Like schema is registered
-import "@/model/Comment.model"; // ✅ This ensures the Comment schema is registered
+import "@/model/Like.model"; 
+import "@/model/Comment.model"; 
 
 import dbConfig from "@/middlewares/db.config";
 import Project from "@/model/Project.model";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 dbConfig();
 
 
-export async function GET(req: NextRequest){
+// GET : Fetches all projects with populated author details and likes data
+export async function GET(){
     try {
         const projects = await Project.find({})
             .populate('authorId', 'name profileImage') // populate author name

@@ -45,7 +45,7 @@ const UserDashboardPage = () => {
       {/* Hero Section */}
       <div className="bg-gradient-to-r from-primary to-secondary text-white w-full max-w-4xl p-8 rounded-xl shadow-md mb-8 text-center">
         <h1 className="text-4xl font-bold mb-2">Welcome, {user.name} 👋</h1>
-        <p className="text-lg font-medium">Here's your developer stats summary!</p>
+        <p className="text-lg font-medium">Here&#39;s your developer stats summary!</p>
       </div>
 
       {/* Stats Section */}

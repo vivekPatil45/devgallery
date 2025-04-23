@@ -26,7 +26,7 @@ const Signup = () => {
             toast.error("Please fill all the fields");
             return;
         }
-        formData.profileImage = "https://res.cloudinary.com/demo/image/upload/d_avatar.png/non_existing_id.png";
+        // formData.profileImage = "https://res.cloudinary.com/demo/image/upload/d_avatar.png/non_existing_id.png";
         try {
             const response = axios.post("/api/auth/signup", { formData });
             toast.promise(response, {
@@ -35,7 +35,7 @@ const Signup = () => {
                     router.push("/login");
                     return "Account Created Successfully";
                 },
-                error: (err: any) => err.response?.data?.message || "Error creating account",
+                error: (err: unknown) => err.response?.data?.message || "Error creating account",
             });
         } catch (error) {
             console.error("Signup error:", error);
@@ -216,11 +216,11 @@ const Signup = () => {
                     ✕
                     </button>
                 </form>
-                <h3 className="font-bold text-lg text-center mb-3">Enter OTP</h3>
+                <h3 className="font-bold text-lg text-base-content text-center mb-3">Enter OTP</h3>
                 <input
                     type="text"
                     placeholder="Enter OTP"
-                    className="input input-bordered input-primary w-full"
+                    className="input input-bordered input-primary w-full text-base-content"
                     value={formData.otp}
                     onChange={(e) => setFormData({ ...formData, otp: e.target.value })}
                 />

@@ -2,6 +2,7 @@
 import { useUser } from "@/context/UserContext";
 import { User } from "@/types/user";
 import axios from "axios";
+import Image from "next/image";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import {
@@ -20,6 +21,7 @@ const Settings = () => {
 export default Settings;
 
 const Profile = ({ user }: { user: User }) => {
+    
     const [formData, setFormData] = useState(user || {});
     const [isEditing, setIsEditing] = useState(false);
     const [imagePreview, setImagePreview] = useState(
@@ -133,10 +135,14 @@ const Profile = ({ user }: { user: User }) => {
         {/* Profile Image */}
         <div className="my-6 flex items-center justify-between gap-4 flex-col sm:flex-row">
             <div className="flex items-center gap-4">
-                <img
+                
+                <Image
                     src={imagePreview}
                     alt="Profile Pic"
-                    className="rounded-full h-40 w-40 object-cover border-4 border-primary shadow-md"
+                    width={160}
+                    height={160}
+                    className="rounded-full object-cover border-4 border-primary shadow-md"
+                    style={{ width: "160px", height: "160px" }}
                 />
                 <input
                     type="file"
@@ -165,7 +171,7 @@ const Profile = ({ user }: { user: User }) => {
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                         className="input input-bordered w-full"
                         placeholder="Full Name"
-                        disabled={!isEditing}
+                        disabled={isEditing}
                         required
                     />
                 </div>

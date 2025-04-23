@@ -24,7 +24,7 @@ const Login = () => {
                 router.push(data.data.route);
                 return data.data.message;
             },
-            error: (err: any) => {
+            error: (err: unknown) => {
                 console.log(err);
                 return err.response.data.message;
             },

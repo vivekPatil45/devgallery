@@ -29,7 +29,7 @@ const Navbar = () => {
       {/* Desktop Center Menu */}
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1 text-base text-base-content gap-6">
-          <li><Link href="/projects">Projects</Link></li>
+          {/* <li><Link href="/projects">Projects</Link></li> */}
           <li><Link href="/about">About</Link></li>
           <li><Link href="/features">Features</Link></li>
         </ul>

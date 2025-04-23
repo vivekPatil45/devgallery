@@ -9,6 +9,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import DraftEditor from "@/components/Editor";
 import { FaPlusCircle } from "react-icons/fa";
+import Image from "next/image";
 
 const CreateProject = () => {
     const { user } = useUser();
@@ -62,7 +63,9 @@ const CreateProject = () => {
         setNewTechInput("");
     };
 
-    const handleRemoveTechStack = (index: number) => {
+    const handleRemoveTechStack = (index: number,e:React.FormEvent) => {
+        e.preventDefault();
+        e.stopPropagation(); 
         const updatedTechStack = [...techStack];
         updatedTechStack.splice(index, 1);
         setTechStack(updatedTechStack);
@@ -98,7 +101,7 @@ const CreateProject = () => {
                     router.push("/user/my-projects");
                     return "Project created successfully!";
                 },
-                error: (err: any) => err.response?.data?.message || "Failed to create project",
+                error: (err: unknown) => err.response?.data?.message || "Failed to create project",
             });
         } catch (error) {
             console.error("Project creation error:", error);
@@ -146,7 +149,7 @@ const CreateProject = () => {
                                         <button
                                             type="button"
                                             className="ml-1 text-red-500 hover:text-red-700"
-                                            onClick={() => handleRemoveTechStack(index)}
+                                            onClick={(e) => handleRemoveTechStack(index,e)}
                                         >
                                             ✕
                                         </button>
@@ -154,7 +157,7 @@ const CreateProject = () => {
                                 ))}
                             </div>
                         ) : (
-                            <p className="text-gray-500">No tech stack added yet.</p>
+                            <p className="text-primary">No tech stack added yet.</p>
                         )}
 
                         <div className="relative mt-4">
@@ -169,9 +172,10 @@ const CreateProject = () => {
                                 <div className="absolute top-full mt-1 w-full bg-base-100 border border-base-300 rounded-lg shadow-lg max-h-40 overflow-y-auto z-10">
                                     {filteredTechStack.map((tech) => (
                                         <div
+                                            
                                             key={tech}
                                             className="p-2 cursor-pointer hover:bg-base-200"
-                                            onClick={() => handleAddTechStack(tech)}
+                                            onClick={(e) => handleAddTechStack(tech,e)}
                                         >
                                             {tech}
                                         </div>
@@ -200,7 +204,14 @@ const CreateProject = () => {
 
                 <div>
                     <label className="block mb-2 font-semibold">Project Image</label>
-                    <img src={imagePreview} alt="Preview" className="w-40 h-40 object-cover rounded-xl mb-2" />
+                    {/* <img src={imagePreview} alt="Preview" className="w-40 h-40 object-cover rounded-xl mb-2" /> */}
+                    <Image
+                        src={imagePreview}
+                        alt="Preview"
+                        width={160}    // Define the width of the image
+                        height={160}   // Define the height of the image
+                        className="object-cover rounded-xl mb-2"
+                    />
                     <input
                         type="file"
                         accept="image/*"

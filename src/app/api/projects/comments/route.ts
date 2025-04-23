@@ -47,10 +47,10 @@ export async function POST(req: NextRequest) {
         await newComment.populate("authorId", "name profileImage");
 
         return NextResponse.json({ comment: newComment }, { status: 201 });
-    } catch (error: any) {
-        console.error("Error posting comment:", error.message || error);
+    } catch (error) {
+        console.error("Error posting comment:", error);
         return NextResponse.json(
-            { message: "Server error", error: error.message || error },
+            { message: "Server error", error: error },
             { status: 500 }
         );
     }
@@ -75,10 +75,10 @@ export async function GET(req: NextRequest) {
             .sort({ createdAt: -1 });
 
         return NextResponse.json({ comments }, { status: 200 });
-    } catch (error: any) {
-        console.error("Error fetching comments:", error.message || error);
+    } catch (error) {
+        console.error("Error fetching comments:", error);
         return NextResponse.json(
-            { message: "Server error", error: error.message || error },
+            { message: "Server error", error: error },
             { status: 500 }
         );
     }

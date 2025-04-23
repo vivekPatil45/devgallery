@@ -22,7 +22,7 @@ const Component = ({
           }
         };
         fetchUser();
-    }, []);
+    }, [setUser]);
 
     return (
         <html lang="en" data-theme="forest">

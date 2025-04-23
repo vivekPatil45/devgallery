@@ -20,7 +20,7 @@ export default function Home() {
           </p>
           <div className="flex justify-center lg:justify-start gap-4">
             <Link
-              href="/projects"
+              href="/signup"
               className="btn btn-primary text-base font-medium text-center rounded-lg"
             >
               Explore Projects

@@ -6,10 +6,31 @@ import ProjectCard from "@/components/ProjectCard";
 import { FaHeart, FaSearch, FaFilter, FaSadTear } from "react-icons/fa";
 import { useUser } from "@/context/UserContext";
 
+type Project = {
+    _id: string;
+    title: string;
+    image: string;
+    authorId: {
+        _id: string;
+        name: string;
+        profileImage: string;
+    };
+    description: string;
+    githubUrl?: string;
+    liveUrl?: string;
+    techStack: string[];
+    likes: {
+      _id: string;
+      userId: string;
+    }[]
+  
+};
+
+
 const FavoriteProjectsPage = () => {
     const { user } = useUser();
     const userId = user?._id;
-    const [projects, setProjects] = useState<any[]>([]);
+    const [projects, setProjects] = useState<Project[]>([]);
     const [search, setSearch] = useState("");
     const [techFilter, setTechFilter] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
@@ -33,6 +54,8 @@ const FavoriteProjectsPage = () => {
             fetchLikedProjects();
         }
     }, [userId]);
+    console.log(projects);
+    
 
     const filteredProjects = projects.filter(
         (p) =>
@@ -59,7 +82,7 @@ const FavoriteProjectsPage = () => {
                 Favorite Projects
             </h1>
             <p className="text-base-content/70 mt-2 text-sm">
-                Projects you've liked from the community
+                Projects you&#39;ve liked from the community
             </p>
         </div>
 
@@ -107,7 +130,7 @@ const FavoriteProjectsPage = () => {
                 <FaSadTear className="text-6xl text-pink-400" />
                 <h2 className="text-xl font-semibold">No favorite projects found</h2>
                 <p className="text-sm max-w-md">
-                    Looks like you haven't liked any projects yet. Explore projects and tap the
+                    Looks like you haven&#39;t liked any projects yet. Explore projects and tap the
                     heart icon to add them here!
                 </p>
             </div>
