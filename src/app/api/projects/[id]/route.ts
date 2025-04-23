@@ -1,18 +1,20 @@
-import "@/model/Like.model"; // Ensure Like schema is registered
-import "@/model/Comment.model"; // Ensure Comment schema is registered
+import "@/model/Like.model";
+import "@/model/Comment.model";
 import dbConfig from "@/middlewares/db.config";
 import Project from "@/model/Project.model";
 import { NextRequest, NextResponse } from "next/server";
 
 dbConfig();
 
-// GET: Fetch project by ID
-export async function GET(
-  request: NextRequest,
-  context: { params: { id: string } }
-) {
+function getIdFromUrl(url: string) {
+  const parts = url.split("/");
+  return parts[parts.length - 1];
+}
+
+// GET
+export async function GET(request: NextRequest) {
   try {
-    const { id } = context.params;
+    const id = getIdFromUrl(request.nextUrl.pathname);
 
     const project = await Project.findById(id)
       .populate({
@@ -42,18 +44,15 @@ export async function GET(
 
     return NextResponse.json({ project }, { status: 200 });
   } catch (error) {
-    console.error("Fetch project error:", error);
+    console.error("GET Error:", error);
     return NextResponse.json({ message: "Server error" }, { status: 500 });
   }
 }
 
-// PUT: Update a specific project by ID
-export async function PUT(
-  request: NextRequest,
-  context: { params: { id: string } }
-) {
+// PUT
+export async function PUT(request: NextRequest) {
   try {
-    const { id } = context.params;
+    const id = getIdFromUrl(request.nextUrl.pathname);
     const { title, description, githubUrl, liveUrl, techStack, image } = await request.json();
 
     const project = await Project.findById(id);
@@ -76,18 +75,15 @@ export async function PUT(
       { status: 200 }
     );
   } catch (error) {
-    console.error("Update project error:", error);
+    console.error("PUT Error:", error);
     return NextResponse.json({ message: "Server error" }, { status: 500 });
   }
 }
 
-// DELETE: Delete a specific project by ID
-export async function DELETE(
-  request: NextRequest,
-  context: { params: { id: string } }
-) {
+// DELETE
+export async function DELETE(request: NextRequest) {
   try {
-    const { id } = context.params;
+    const id = getIdFromUrl(request.nextUrl.pathname);
 
     const deletedProject = await Project.findByIdAndDelete(id);
 
@@ -97,7 +93,7 @@ export async function DELETE(
 
     return NextResponse.json({ message: "Project deleted successfully" }, { status: 200 });
   } catch (error) {
-    console.error("Delete project error:", error);
+    console.error("DELETE Error:", error);
     return NextResponse.json({ message: "Server error" }, { status: 500 });
   }
 }
