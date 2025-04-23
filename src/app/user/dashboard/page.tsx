@@ -63,7 +63,7 @@ const UserDashboardPage = () => {
         <DashboardCard title="Create Project" icon={<IconPlus />} path="/user/create-project" />
         <DashboardCard title="Favorites" icon={<IconHeart />} path="/user/favorites" />
         <DashboardCard title="My Profile" icon={<IconUser />} path="/user/profile" />
-        <DashboardCard title="Project Search" icon={<IconSearch />} path="/user/project-search" />
+        <DashboardCard title="Project Search" icon={<IconSearch />} path="/user/project" />
       </div>
     </div>
   );

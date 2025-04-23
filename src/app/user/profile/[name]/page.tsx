@@ -211,7 +211,7 @@ const PublicUserProfilePage = () => {
                                     <td>
                                         <div className="flex flex-wrap gap-1">
                                             {project.techStack.slice(0, 2).map((tech, idx) => (
-                                                <span key={idx} className="badge badge-outline badge-sm text-xs">
+                                                <span key={idx} className="badge badge-outline badge-primary badge-sm text-xs">
                                                     {tech}
                                                 </span>
                                             ))}

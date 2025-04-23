@@ -77,14 +77,14 @@ const Signup = () => {
             toast.error("Something went wrong!!!");
         }
 
-        // Simulating OTP send
-        const generatedOtp = "123456";
-        setOtp(generatedOtp);
+        // // Simulating OTP send
+        // const generatedOtp = "123456";
+        // setOtp(generatedOtp);
 
         (
         document.getElementById("otpContainer") as HTMLDialogElement
         )?.showModal();
-        toast.success("OTP sent to your email!");
+        // toast.success("OTP sent to your email!");
     };
 
     const handleProfileImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {

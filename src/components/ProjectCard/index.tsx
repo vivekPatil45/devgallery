@@ -35,9 +35,15 @@ const ProjectCard: React.FC<{ project: ProjectCardProps['project'] }> = ({ proje
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(project.likes.length);
 
+  console.log("project",project);
+  console.log("Useid",userId);
+
+  
   useEffect(() => {
     if (userId) {
       const isLiked = project.likes.some((like) => like.userId === userId);
+      console.log("liked",isLiked);
+      
       setLiked(isLiked);
     }
   }, [userId, project.likes]);
@@ -85,7 +91,7 @@ const ProjectCard: React.FC<{ project: ProjectCardProps['project'] }> = ({ proje
         {/* Title + Like */}
         <div className="flex justify-between items-start mb-2">
           <h2 className="text-xl font-bold text-base-content line-clamp-2">{project.title}</h2>
-          <button onClick={handleLikeToggle} className="text-secondary flex items-center gap-1 hover:text-red-500 transition">
+          <button onClick={handleLikeToggle} className="text-secondary flex items-center cursor-pointer gap-1 hover:text-red-500 transition">
             <FaHeart className={`transition-all ${liked ? 'text-red-500' : 'text-base-content/50'}`} />
             <span className="text-sm">{likeCount}</span>
           </button>
@@ -142,7 +148,7 @@ const ProjectCard: React.FC<{ project: ProjectCardProps['project'] }> = ({ proje
         {/* View Project Button */}
         <div className="mt-4">
           <Link
-            href={`/user/projects/${project._id}`}
+            href={`/user/projects/${project.title}?id=${project._id}`}
             className="btn btn-sm btn-primary w-full rounded-md hover:bg-primary-focus transition-all"
           >
             View Project

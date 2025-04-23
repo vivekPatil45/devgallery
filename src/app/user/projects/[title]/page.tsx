@@ -1,7 +1,7 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams } from 'next/navigation';
+import { useParams, useSearchParams } from 'next/navigation';
 import { EditorState, convertFromRaw } from 'draft-js';
 import { Editor } from 'draft-js';
 import {
@@ -17,6 +17,7 @@ import { formatTimeAgo } from '@/utils/constants';
 import { useUser } from '@/context/UserContext';
 import toast from 'react-hot-toast';
 import Image from 'next/image';
+import Link from 'next/link';
 interface User {
     _id: string;
     name: string;
@@ -68,8 +69,22 @@ const defaultProject: Project = {
     updatedAt: "",
 };
 
+const Loader = () => {
+    return (
+        <div className="flex justify-center items-center h-[50vh]">
+            <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+        </div>
+    );
+};
+
 const ViewProjectPage = () => {
-    const { id } = useParams();
+    const title = useParams();
+   
+    const searchParams = useSearchParams();
+    const id = searchParams.get('id');
+    
+    
+    // const { id } = useParams();
     const { user } = useUser();
 
     const userId = user?._id?.toString();
@@ -193,8 +208,10 @@ const ViewProjectPage = () => {
     
     
     
+    const isLoading = !project || !project._id || !project.title;
 
-    if (!project) return <div className="text-center mt-10 text-lg text-gray-500">Loading project...</div>;
+    if (isLoading) return <Loader />;
+    // if (!project) return <div className="text-center mt-10 text-lg text-gray-500">Loading project...</div>;
 
     return (
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
@@ -205,13 +222,15 @@ const ViewProjectPage = () => {
                 {/* Title and Author */}
                 <div className="flex items-center gap-4 mb-4">
                     {/* Avatar */}
-                    <Image
-                        src={project.authorId.profileImage || '/image.png'}
-                        alt="Author"
-                        width={48}
-                        height={48}
-                        className="w-12 h-12 rounded-full object-cover border-2 border-primary hover:scale-110 transition-all"
-                    />
+                    <Link href={`/user/profile/${project.authorId.name}?id=${project.authorId._id}`}>
+                        <Image
+                            src={project.authorId.profileImage || '/image.png'}
+                            alt="Author"
+                            width={48}
+                            height={48}
+                            className="w-12 h-12 rounded-full object-cover border-2 border-primary hover:scale-110 transition-all"
+                        />
+                    </Link>
                     <div>
                         <h1 className="text-3xl font-bold flex items-center gap-2 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
                             {project.title}
@@ -307,13 +326,16 @@ const ViewProjectPage = () => {
                 <div className="space-y-4 mb-6">
                     {project.comments.map((c, i) => (
                         <div key={i} className="flex items-start gap-3 p-4 bg-base-200 rounded-lg">
-                            <Image
-                                src={c.authorId.profileImage ||" "}
-                                alt="avatar"
-                                width={40}
-                                height={40}
-                                className="w-10 h-10 rounded-full object-cover"
-                            />
+                            
+                            <Link href={`/user/profile/${c.authorId.name}?id=${c.authorId._id}`}>
+                                <Image
+                                    src={c.authorId.profileImage ||" "}
+                                    alt="avatar"
+                                    width={40}
+                                    height={40}
+                                    className="w-10 h-10  rounded-full object-cover border-2 border-accent hover:scale-110 transition-all"
+                                />
+                            </Link>
                             <div>
                                 <p className="font-semibold text-base-content">{c.authorId.name}</p>
                                 <p className="text-sm text-base-content/80">{c.text}</p>
