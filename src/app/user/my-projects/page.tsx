@@ -1,7 +1,7 @@
 'use client';
 
 import { useUser } from "@/context/UserContext";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -64,13 +64,17 @@ const MyProjectsPage = () => {
 
         const deletePromise = axios.delete(`/api/projects/${id}`);
 
+        
         toast.promise(deletePromise, {
-        loading: "Deleting project...",
-        success: () => {
-            setProjects((prev) => prev.filter((p) => p._id !== id));
-            return "Project deleted successfully";
-        },
-        error: (err: unknown) => err.response?.data?.message || "Error deleting project",
+            loading: "Deleting project...",
+            success: () => {
+                setProjects((prev) => prev.filter((p) => p._id !== id));
+                return "Project deleted successfully";
+            },
+            error: (err: unknown) => {
+                const axiosErr = err as AxiosError<{ message: string }>;
+                return axiosErr.response?.data?.message || "Error deleting project";
+            },
         });
     };
 

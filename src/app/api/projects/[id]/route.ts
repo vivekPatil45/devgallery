@@ -7,8 +7,8 @@ import { NextRequest, NextResponse } from "next/server";
 dbConfig();
 
 function getIdFromUrl(url: string) {
-  const parts = url.split("/");
-  return parts[parts.length - 1];
+    const parts = url.split("/");
+    return parts[parts.length - 1];
 }
 
 // GET

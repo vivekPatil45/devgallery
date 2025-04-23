@@ -101,7 +101,14 @@ const CreateProject = () => {
                     router.push("/user/my-projects");
                     return "Project created successfully!";
                 },
-                error: (err: unknown) => err.response?.data?.message || "Failed to create project",
+                error: (err: unknown) => {
+                    const errorMessage =
+                        axios.isAxiosError(err) && err.response?.data?.message
+                            ? err.response.data.message
+                            : "Failed to create project";
+                    return errorMessage;
+                },
+        
             });
         } catch (error) {
             console.error("Project creation error:", error);
@@ -148,7 +155,7 @@ const CreateProject = () => {
                                         {tech}
                                         <button
                                             type="button"
-                                            className="ml-1 text-red-500 hover:text-red-700"
+                                            className="ml-1 text-red-500 cursor-pointer hover:text-red-700"
                                             onClick={(e) => handleRemoveTechStack(index,e)}
                                         >
                                             ✕
@@ -175,7 +182,7 @@ const CreateProject = () => {
                                             
                                             key={tech}
                                             className="p-2 cursor-pointer hover:bg-base-200"
-                                            onClick={(e) => handleAddTechStack(tech,e)}
+                                            onClick={() => handleAddTechStack(tech)}
                                         >
                                             {tech}
                                         </div>

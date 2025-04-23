@@ -35,7 +35,13 @@ const Signup = () => {
                     router.push("/login");
                     return "Account Created Successfully";
                 },
-                error: (err: unknown) => err.response?.data?.message || "Error creating account",
+                error: (err: unknown) => {
+                    if (axios.isAxiosError(err) && err.response) {
+                        return err.response.data.message;
+                    }
+                    console.error(err);
+                    return "Error creating account";
+                },
             });
         } catch (error) {
             console.error("Signup error:", error);

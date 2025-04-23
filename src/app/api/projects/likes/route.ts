@@ -2,6 +2,7 @@ import dbConfig from "@/middlewares/db.config";
 import Project from "@/model/Project.model";
 import Like from "@/model/Like.model";
 import { NextRequest, NextResponse } from "next/server";
+import { Types } from "mongoose";
 
 dbConfig();
 
@@ -39,7 +40,7 @@ export async function POST(req: NextRequest) {
 
             // Remove the like reference from the project
             project.likes = project.likes.filter(
-                (like) => like.toString() !== existingLike._id.toString()
+                (like: Types.ObjectId) => like.toString() !== existingLike._id.toString()
             );
             await project.save();
             /*

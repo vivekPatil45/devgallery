@@ -3,6 +3,22 @@ import dbConfig from "@/middlewares/db.config";
 import { NextRequest, NextResponse } from "next/server";
 import Project from "@/model/Project.model";
 dbConfig();
+
+export interface LeanUser {
+  _id: string;
+  name: string;
+  email: string;
+  bio?: string;
+  profileImage?: string;
+  socialLinks: {
+    github: string;
+    linkedin: string;
+    portfolio: string;
+    twitter: string;
+  };
+  isVerified: boolean;
+  createdAt: Date;
+}
 export async function GET(req: NextRequest) {
 
     const userId = req.nextUrl.searchParams.get("id");
@@ -12,7 +28,8 @@ export async function GET(req: NextRequest) {
     }
 
     try {
-      const user = await User.findById(userId).lean();
+      // const user = await User.findById(userId).lean();
+      const user = await User.findById(userId).select('-password').lean<LeanUser>();
       if (!user) return NextResponse.json({ error: "User not found" }, { status: 404 });
 
       // console.log(user);

@@ -122,8 +122,12 @@ const EditProject = () => {
                         router.push("/user/my-projects");
                         return "Project updated successfully!";
                     },
-                    error: (err: unknown) =>
-                        err.response?.data?.message || "Failed to update project",
+                    error: (err: unknown) => {
+                        if (axios.isAxiosError(err) && err.response?.data?.message) {
+                            return err.response.data.message;
+                        }
+                        return "Failed to update project";
+                    }
                 }
             );
         

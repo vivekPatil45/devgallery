@@ -25,9 +25,14 @@ const Login = () => {
                 return data.data.message;
             },
             error: (err: unknown) => {
-                console.log(err);
-                return err.response.data.message;
-            },
+                console.error(err);
+            
+                if (axios.isAxiosError(err) && err.response) {
+                    return err.response.data.message || "An error occurred";
+                }
+            
+                return "An unexpected error occurred";
+            }
         });
     };
 

@@ -4,6 +4,7 @@ import {
     EditorState,
     RichUtils,
     ContentBlock,
+    DraftHandleValue,
 } from "draft-js";
 import Toolbar from "./Toolbar";
 
@@ -77,48 +78,92 @@ const DraftEditor = ({ description, setDescription }: RichTextEditorProps) => {
         editor.current?.focus();
     }, []);
 
-    const handleKeyCommand = (command: string): boolean => {
-        const newState = RichUtils.handleKeyCommand(description, command);
+    // const handleKeyCommand = (command: string): boolean => {
+    //     const newState = RichUtils.handleKeyCommand(description, command);
+    //     if (newState) {
+    //         setDescription(newState);
+    //     return true;
+    //     }
+    //     return false;
+    // };
+    const handleKeyCommand = (command: string, editorState: EditorState): DraftHandleValue => {
+        const newState = RichUtils.handleKeyCommand(editorState, command);
         if (newState) {
             setDescription(newState);
-        return true;
+            return 'handled'; // This will indicate that the command has been handled
         }
-        return false;
+        return 'not-handled'; // This indicates that the command was not handled
     };
+
+    // const styleMap = {
+    //     CODE: {
+    //     backgroundColor: "rgba(0, 0, 0, 0.05)",
+    //     fontFamily: '"Inconsolata", "Menlo", "Consolas", monospace',
+    //     fontSize: 16,
+    //     padding: 2,
+    //     },
+    //     HIGHLIGHT: {
+    //     backgroundColor: "#F7A5F7",
+    //     },
+    //     UPPERCASE: {
+    //     textTransform: "uppercase",
+    //     },
+    //     LOWERCASE: {
+    //     textTransform: "lowercase",
+    //     },
+    //     CODEBLOCK: {
+    //     fontFamily: '"Fira Code", monospace',
+    //     fontSize: "inherit",
+    //     background: "#ffeff0",
+    //     fontStyle: "italic",
+    //     padding: "0.3rem 0.5rem",
+    //     borderRadius: "0.2rem",
+    //     },
+    //     SUPERSCRIPT: {
+    //     verticalAlign: "super",
+    //     fontSize: "80%",
+    //     },
+    //     SUBSCRIPT: {
+    //     verticalAlign: "sub",
+    //     fontSize: "80%",
+    //     },
+    // };
 
     const styleMap = {
         CODE: {
-        backgroundColor: "rgba(0, 0, 0, 0.05)",
-        fontFamily: '"Inconsolata", "Menlo", "Consolas", monospace',
-        fontSize: 16,
-        padding: 2,
+            backgroundColor: "rgba(0, 0, 0, 0.05)",
+            fontFamily: '"Inconsolata", "Menlo", "Consolas", monospace',
+            fontSize: 16,
+            padding: 2,
         },
         HIGHLIGHT: {
-        backgroundColor: "#F7A5F7",
+            backgroundColor: "#F7A5F7",
         },
         UPPERCASE: {
-        textTransform: "uppercase",
-        },
+            textTransform: "uppercase", // This will be inferred as 'uppercase' literal
+        } as const, // Add 'as const' here
         LOWERCASE: {
-        textTransform: "lowercase",
-        },
+            textTransform: "lowercase", // This will be inferred as 'lowercase' literal
+        } as const, // Add 'as const' here
         CODEBLOCK: {
-        fontFamily: '"Fira Code", monospace',
-        fontSize: "inherit",
-        background: "#ffeff0",
-        fontStyle: "italic",
-        padding: "0.3rem 0.5rem",
-        borderRadius: "0.2rem",
+            fontFamily: '"Fira Code", monospace',
+            fontSize: "inherit",
+            background: "#ffeff0",
+            fontStyle: "italic",
+            padding: "0.3rem 0.5rem",
+            borderRadius: "0.2rem",
         },
         SUPERSCRIPT: {
-        verticalAlign: "super",
-        fontSize: "80%",
+            verticalAlign: "super",
+            fontSize: "80%",
         },
         SUBSCRIPT: {
-        verticalAlign: "sub",
-        fontSize: "80%",
+            verticalAlign: "sub",
+            fontSize: "80%",
         },
     };
+    
+    
 
     const myBlockStyleFn = (block: ContentBlock) => {
         const type = block.getType();

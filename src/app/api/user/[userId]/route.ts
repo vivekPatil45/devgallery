@@ -4,11 +4,15 @@ import { NextRequest, NextResponse } from 'next/server';
 
 dbConfig();
 
-export async function GET(req: NextRequest, { params }: { params: { userId: string } }) {
+export async function GET(req: NextRequest) {
     try {
-        
+        // Extract userId from URL
+        const pathname = req.nextUrl.pathname;
+        const userId = pathname.split('/').pop();
 
-        const userId = params.userId;
+        if (!userId) {
+            return NextResponse.json({ error: 'User ID is missing in URL' }, { status: 400 });
+        }
 
         const user = await User.findById(userId).select('-password'); // hide password
 
