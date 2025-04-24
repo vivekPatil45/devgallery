@@ -218,7 +218,7 @@ const PublicUserProfilePage = () => {
                                         </div>
                                     </td>
                                     <td>
-                                        <Link href={`/user/projects/${project._id}`}>
+                                        <Link href={`/user/projects/${project.title}?id=${project._id}`}>
                                             <button className="btn btn-xs btn-primary">
                                                 <FaEye />
                                             </button>
